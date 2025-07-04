@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsy.dal.mapper.period.PeriodMapper">
+
+    <select id="list" resultType="com.zsy.dal.dataobject.period.Period">
+        SELECT * FROM period
+        <where>
+            <if test="period != null">
+                period=#{period}
+            </if>
+
+            <if test="notes != null">
+                AND notes=#{notes}
+            </if>
+        </where>
+    </select>
+</mapper>

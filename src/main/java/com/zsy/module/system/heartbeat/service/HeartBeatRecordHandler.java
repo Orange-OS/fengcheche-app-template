@@ -1,0 +1,33 @@
+package com.zsy.module.system.heartbeat.service;
+
+import com.zsy.module.system.heartbeat.core.HeartBeatRecord;
+import com.zsy.module.system.heartbeat.core.IHeartBeatRecordHandler;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+
+/**
+ * 心跳记录
+ */
+@Slf4j
+@Service
+public class HeartBeatRecordHandler implements IHeartBeatRecordHandler {
+//    @Resource
+//    private HeartBeatRecordDao heartBeatRecordDao;
+
+    /**
+     * 心跳日志处理方法
+     * @param heartBeatRecord
+     */
+    @Override
+    public void handler(HeartBeatRecord heartBeatRecord) {
+//        HeartBeatRecordEntity heartBeatRecordEntity = SmartBeanUtil.copy(heartBeatRecord, HeartBeatRecordEntity.class);
+//        HeartBeatRecordEntity heartBeatRecordOld = heartBeatRecordDao.query(heartBeatRecordEntity);
+//        if (heartBeatRecordOld == null) {
+//            heartBeatRecordDao.insert(heartBeatRecordEntity);
+//        } else {
+//            heartBeatRecordDao.updateHeartBeatTimeById(heartBeatRecordOld.getHeartBeatRecordId(), heartBeatRecordEntity.getHeartBeatTime());
+//        }
+    }
+}

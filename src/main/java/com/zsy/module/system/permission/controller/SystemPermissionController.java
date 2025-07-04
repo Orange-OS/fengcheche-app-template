@@ -1,0 +1,163 @@
+package com.zsy.module.system.permission.controller;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zsy.framework.common.exception.BusinessException;
+import com.zsy.framework.common.pojo.Result;
+import com.zsy.module.system.permission.domain.entity.SystemPermissionEntity;
+import com.zsy.module.system.permission.service.SystemPermissionService;
+import com.zsy.module.system.user.domain.SystemUserEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * 系统权限控制器
+ */
+@RestController
+@RequestMapping("/system/permission")
+public class SystemPermissionController {
+    
+    @Resource
+    private SystemPermissionService systemPermissionService;
+    
+    /**
+     * 获取权限列表
+     */
+    @GetMapping("/list")
+    public Result<List<SystemPermissionEntity>> list() {
+        List<SystemPermissionEntity> permissions = systemPermissionService.list();
+        return Result.success(permissions);
+    }
+    
+    /**
+     * 分页查询权限
+     */
+    @GetMapping
+    public Result<Page<SystemPermissionEntity>> page(
+            @RequestParam(defaultValue = "1") Integer current,
+            @RequestParam(defaultValue = "10") Integer size,
+            SystemPermissionEntity permission) {
+        Page<SystemPermissionEntity> page = new Page<>(current, size);
+        LambdaQueryWrapper<SystemPermissionEntity> queryWrapper = new LambdaQueryWrapper<>();
+        
+        // 根据条件构建查询
+        if (permission.getName() != null) {
+            queryWrapper.like(SystemPermissionEntity::getName, permission.getName());
+        }
+        if (permission.getCode() != null) {
+            queryWrapper.like(SystemPermissionEntity::getCode, permission.getCode());
+        }
+        if (permission.getType() != null) {
+            queryWrapper.eq(SystemPermissionEntity::getType, permission.getType());
+        }
+        if (permission.getMenuId() != null) {
+            queryWrapper.eq(SystemPermissionEntity::getMenuId, permission.getMenuId());
+        }
+        if (permission.getStatus() != null) {
+            queryWrapper.eq(SystemPermissionEntity::getStatus, permission.getStatus());
+        }
+        
+        // 默认按ID排序
+        queryWrapper.orderByAsc(SystemPermissionEntity::getId);
+        
+        systemPermissionService.page(page, queryWrapper);
+        return Result.success(page);
+    }
+    
+    /**
+     * 获取权限详情
+     */
+    @GetMapping("/{id}")
+    public Result<SystemPermissionEntity> getPermission(@PathVariable Long id) {
+        SystemPermissionEntity permission = systemPermissionService.getById(id);
+        return Result.success(permission);
+    }
+    
+    /**
+     * 新增权限
+     */
+    @PostMapping
+    public Result<Void> add(@RequestBody SystemPermissionEntity permission) {
+        // 检查权限标识符是否已存在
+        LambdaQueryWrapper<SystemPermissionEntity> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SystemPermissionEntity::getCode, permission.getCode());
+        if (systemPermissionService.count(queryWrapper) > 0) {
+            throw BusinessException.of("权限标识符已存在");
+        }
+        
+        // 设置默认值
+        if (permission.getStatus() == null) {
+            permission.setStatus(1); // 默认启用
+        }
+        
+        systemPermissionService.save(permission);
+        return Result.success();
+    }
+    
+    /**
+     * 修改权限
+     */
+    @PutMapping
+    public Result<Void> update(@RequestBody SystemPermissionEntity permission) {
+        // 检查权限标识符是否已存在（排除自身）
+        if (permission.getCode() != null) {
+            LambdaQueryWrapper<SystemPermissionEntity> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(SystemPermissionEntity::getCode, permission.getCode())
+                    .ne(SystemPermissionEntity::getId, permission.getId());
+            if (systemPermissionService.count(queryWrapper) > 0) {
+                throw BusinessException.of("权限标识符已存在");
+            }
+        }
+        
+        systemPermissionService.updateById(permission);
+        return Result.success();
+    }
+    
+    /**
+     * 删除权限
+     */
+    @DeleteMapping("/{id}")
+    public Result<Void> delete(@PathVariable Long id) {
+        // 检查权限是否已分配给角色
+        if (systemPermissionService.isPermissionAssigned(id)) {
+            throw BusinessException.of("该权限已分配给角色，无法删除");
+        }
+        
+        systemPermissionService.removeById(id);
+        return Result.success();
+    }
+    
+    /**
+     * 根据角色ID获取权限列表
+     */
+    @GetMapping("/role/{roleId}")
+    public Result<List<SystemPermissionEntity>> getPermissionsByRoleId(@PathVariable Long roleId) {
+        List<SystemPermissionEntity> permissions = systemPermissionService.getPermissionsByRoleId(roleId);
+        return Result.success(permissions);
+    }
+    
+    /**
+     * 根据菜单ID获取权限列表
+     */
+    @GetMapping("/menu/{menuId}")
+    public Result<List<SystemPermissionEntity>> getPermissionsByMenuId(@PathVariable Long menuId) {
+        LambdaQueryWrapper<SystemPermissionEntity> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SystemPermissionEntity::getMenuId, menuId);
+        List<SystemPermissionEntity> permissions = systemPermissionService.list(queryWrapper);
+        return Result.success(permissions);
+    }
+
+    /**
+     * 更新权限状态
+     */
+    @PutMapping("/{id}/status")
+    public Result<Void> updateStatus(
+            @PathVariable Long id,
+            @RequestBody SystemPermissionEntity statusUpdate) {
+        systemPermissionService.updatePermissionStatus(id, statusUpdate.getStatus());
+        return Result.success();
+    }
+
+} 
