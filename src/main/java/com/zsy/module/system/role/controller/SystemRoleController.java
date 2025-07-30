@@ -1,10 +1,8 @@
 package com.zsy.module.system.role.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zsy.framework.common.pojo.Result;
-import com.zsy.module.life.medicationrecord.domain.form.MedicationRecordAddForm;
-import com.zsy.module.life.medicationrecord.domain.form.MedicationRecordUpdateForm;
-import com.zsy.module.life.medicationrecord.domain.vo.MedicationRecordVO;
 import com.zsy.module.system.role.domain.entity.SystemRoleEntity;
 import com.zsy.module.system.role.domain.form.SystemRoleAddForm;
 import com.zsy.module.system.role.domain.form.SystemRoleUpdateForm;
@@ -23,12 +21,14 @@ public class SystemRoleController {
     private SystemRoleService systemRoleService;
 
     @PostMapping
+    @SaCheckPermission("system:role:create")
     public Result<Void> create(@Validated @RequestBody SystemRoleAddForm addForm) {
         systemRoleService.create(addForm);
         return Result.success();
     }
 
     @PutMapping("/{id}")
+    @SaCheckPermission("system:role:update")
     public Result<Void> update(@PathVariable Long id, @Validated @RequestBody SystemRoleUpdateForm updateForm) {
         updateForm.setId(id);
         systemRoleService.update(updateForm);
@@ -36,6 +36,7 @@ public class SystemRoleController {
     }
 
     @DeleteMapping("/{id}")
+    @SaCheckPermission("system:role:query")
     public Result<Void> delete(@PathVariable Long id) {
         systemRoleService.delete(id);
         return Result.success();
@@ -47,11 +48,13 @@ public class SystemRoleController {
 //    }
 
     @GetMapping("/list")
+    @SaCheckPermission("system:role:query")
     public Result<List<SystemRoleEntity>> list() {
         return Result.success(systemRoleService.list());
     }
 
     @GetMapping
+    @SaCheckPermission("system:role:query")
     public Result<Page<SystemRoleVO>> page(
             @RequestParam(defaultValue = "1") Integer pageNum,
             @RequestParam(defaultValue = "10") Integer pageSize,

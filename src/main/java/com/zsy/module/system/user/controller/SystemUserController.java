@@ -1,5 +1,7 @@
 package com.zsy.module.system.user.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zsy.framework.common.pojo.Result;
 import com.zsy.module.system.user.domain.SystemUserEntity;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
+@SaCheckLogin
 @RestController
 @RequestMapping("/system/user")
 public class SystemUserController {
@@ -19,6 +22,7 @@ public class SystemUserController {
      * 获取用户列表
      */
     @GetMapping("/list")
+    @SaCheckPermission("system:user:query")
     public Result<List<SystemUserEntity>> list(@RequestParam(required = false, value = "username") String username) {
         return Result.success(systemUserService.getUserList(username));
     }
@@ -27,6 +31,7 @@ public class SystemUserController {
      * 分页查询用户
      */
     @GetMapping("/page")
+    @SaCheckPermission("system:user:query")
     public Result<Page<SystemUserEntity>> page(
             @RequestParam(defaultValue = "1") Integer current,
             @RequestParam(defaultValue = "10") Integer size,
@@ -38,6 +43,7 @@ public class SystemUserController {
      * 获取用户详情
      */
     @GetMapping("/{id}")
+    @SaCheckPermission("system:user:query")
     public Result<SystemUserEntity> getUser(@PathVariable Long id) {
         return Result.success(systemUserService.getUserById(id));
     }
@@ -46,6 +52,7 @@ public class SystemUserController {
      * 新增用户
      */
     @PostMapping
+    @SaCheckPermission("system:user:create")
     public Result<Void> add(@RequestBody SystemUserEntity user) {
         systemUserService.createUser(user);
         return Result.success();
@@ -55,6 +62,7 @@ public class SystemUserController {
      * 修改用户
      */
     @PutMapping("/{id}")
+    @SaCheckPermission("system:user:update")
     public Result<Void> update(@RequestBody SystemUserEntity user) {
         systemUserService.updateUser(user);
         return Result.success();
@@ -64,6 +72,7 @@ public class SystemUserController {
      * 删除用户
      */
     @DeleteMapping("/{id}")
+    @SaCheckPermission("system:user:delete")
     public Result<Void> delete(@PathVariable Long id) {
         systemUserService.deleteUser(id);
         return Result.success();
@@ -94,6 +103,7 @@ public class SystemUserController {
      * 更新用户状态
      */
     @PutMapping("/{id}/status")
+    @SaCheckPermission("system:user:update")
     public Result<Void> updateStatus(
             @PathVariable Long id,
             @RequestBody SystemUserEntity statusUpdate) {
