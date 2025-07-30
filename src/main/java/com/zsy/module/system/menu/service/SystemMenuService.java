@@ -2,11 +2,9 @@ package com.zsy.module.system.menu.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zsy.framework.common.pojo.Result;
 import com.zsy.module.system.menu.domain.entity.SystemMenuEntity;
 import com.zsy.module.system.menu.domain.form.SystemMenuAddForm;
-import com.zsy.module.system.permission.domain.entity.SystemPermissionEntity;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.zsy.module.system.menu.domain.form.SystemMenuUpdateForm;
 
 import java.util.List;
 
@@ -50,5 +48,7 @@ public interface SystemMenuService extends IService<SystemMenuEntity> {
     Page<SystemMenuEntity> page(Integer current, Integer size, SystemMenuEntity menu);
 
     void create(SystemMenuAddForm addForm);
+
+    void update(SystemMenuUpdateForm updateForm);
 
 }

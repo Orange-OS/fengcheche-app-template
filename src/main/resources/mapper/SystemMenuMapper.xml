@@ -7,7 +7,7 @@
         FROM system_menus m
         INNER JOIN system_role_menus rm ON m.id = rm.menu_id
         WHERE rm.role_id = #{roleId}
-        ORDER BY m.order_num
+        ORDER BY m.sort
     </select>
     
     <select id="selectByUserId" resultType="com.zsy.module.system.menu.domain.entity.SystemMenuEntity">
@@ -16,6 +16,6 @@
         INNER JOIN system_role_menus rm ON m.id = rm.menu_id
         INNER JOIN system_user_roles ur ON rm.role_id = ur.role_id
         WHERE ur.user_id = #{userId}
-        ORDER BY m.order_num
+        ORDER BY m.sort
     </select>
 </mapper> 

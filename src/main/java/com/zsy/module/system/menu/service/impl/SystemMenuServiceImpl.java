@@ -5,13 +5,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zsy.constant.CacheKeyConst;
-import com.zsy.framework.common.pojo.Result;
-import com.zsy.module.life.medicationrecord.domain.entity.MedicationRecordEntity;
 import com.zsy.module.system.menu.domain.entity.SystemMenuEntity;
 import com.zsy.module.system.menu.domain.form.SystemMenuAddForm;
+import com.zsy.module.system.menu.domain.form.SystemMenuUpdateForm;
 import com.zsy.module.system.menu.mapper.SystemMenuMapper;
 import com.zsy.module.system.menu.service.SystemMenuService;
-import com.zsy.module.system.permission.domain.entity.SystemPermissionEntity;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -27,26 +25,26 @@ import java.util.stream.Collectors;
  */
 @Service
 public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemMenuEntity> implements SystemMenuService {
-    
+
     @Override
     public List<SystemMenuEntity> getMenusByRoleId(Long roleId) {
         return baseMapper.selectByRoleId(roleId);
     }
-    
+
     @Override
     @Cacheable(value = CacheKeyConst.USER_MENUS, key = "#userId")
     public List<SystemMenuEntity> getMenusByUserId(Long userId) {
         return baseMapper.selectByUserId(userId);
     }
-    
+
     @Override
     public List<SystemMenuEntity> buildMenuTree(List<SystemMenuEntity> menus) {
         // 构建菜单ID与菜单对象的映射关系
         Map<Long, SystemMenuEntity> menuMap = menus.stream()
                 .collect(Collectors.toMap(SystemMenuEntity::getId, menu -> menu));
-        
+
         List<SystemMenuEntity> menuTree = new ArrayList<>();
-        
+
         // 遍历菜单列表，构建菜单树
         for (SystemMenuEntity menu : menus) {
             // 如果是根菜单（父ID为0或null），则直接添加到结果列表
@@ -54,7 +52,7 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
                 menuTree.add(menu);
                 continue;
             }
-            
+
             // 获取父菜单
             SystemMenuEntity parentMenu = menuMap.get(menu.getParentId());
             if (parentMenu != null) {
@@ -69,10 +67,10 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
                 menuTree.add(menu);
             }
         }
-        
+
         return menuTree;
     }
-    
+
     @Override
     @Cacheable(value = CacheKeyConst.USER_MENU_TREE, key = "#userId")
     public List<SystemMenuEntity> getMenuTreeByUserId(Long userId) {
@@ -108,6 +106,17 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
         systemMenuEntity.setCreateTime(LocalDateTime.now());
 
         save(systemMenuEntity);
+    }
+
+    @Override
+    public void update(SystemMenuUpdateForm updateForm) {
+        SystemMenuEntity systemMenuEntity = new SystemMenuEntity();
+        BeanUtils.copyProperties(updateForm, systemMenuEntity);
+
+        systemMenuEntity.setUpdateBy(StpUtil.getLoginIdAsLong());
+
+        // 更新
+        updateById(systemMenuEntity);
     }
 
 } 

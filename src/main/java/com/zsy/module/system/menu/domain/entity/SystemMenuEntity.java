@@ -36,7 +36,7 @@ public class SystemMenuEntity implements Serializable {
     /**
      * 显示顺序
      */
-    private Integer orderNum;
+    private Integer sort;
 
     /**
      * 路由地址
@@ -107,7 +107,7 @@ public class SystemMenuEntity implements Serializable {
     /**
      * 更新者
      */
-    private String updateBy;
+    private Long updateBy;
 
     /**
      * 更新时间
