@@ -15,6 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class SaTokenConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+
         // 注册 Sa-Token 拦截器，打开注解式鉴权功能
         registry.addInterceptor(new SaInterceptor(handle -> {
             // 指定一条拦截规则：拦截所有 path
@@ -25,9 +26,15 @@ public class SaTokenConfig implements WebMvcConfigurer {
                     .check(r -> StpUtil.checkLogin());
                     
             // 权限认证规则
-//            SaRouter.match("/system/admin/**", r -> StpUtil.checkRole("admin"));
-//            SaRouter.match("/system/user/**", r -> StpUtil.checkPermission("user"));
+            SaRouter.match("/**", r -> {
+                // 用户有 admin 角色
+                if (StpUtil.hasRole("admin")) {
+                    // 停止后续的匹配检查
+                    SaRouter.stop();
+                }
+            });
         })).addPathPatterns("/**");
+
     }
 
     // 添加CORS配置
