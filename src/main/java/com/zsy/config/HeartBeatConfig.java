@@ -1,7 +1,7 @@
 //package com.zsy.config;
 //
-//import com.zsy.module.system.heartbeat.core.HeartBeatManager;
-//import com.zsy.module.system.heartbeat.core.IHeartBeatRecordHandler;
+//import com.zsy.module.system.heartbeat.core.HeartbeatManager;
+//import com.zsy.module.system.heartbeat.core.IHeartbeatRecordHandler;
 //import org.springframework.beans.factory.annotation.Value;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
@@ -20,10 +20,10 @@
 //    private Long intervalSeconds;
 //
 //    @Resource
-//    private IHeartBeatRecordHandler heartBeatRecordHandler;
+//    private IHeartbeatRecordHandler heartBeatRecordHandler;
 //
 //    @Bean
-//    public HeartBeatManager heartBeatManager() {
-//        return new HeartBeatManager(intervalSeconds * 1000L, heartBeatRecordHandler);
+//    public HeartbeatManager heartBeatManager() {
+//        return new HeartbeatManager(intervalSeconds * 1000L, heartBeatRecordHandler);
 //    }
 //}

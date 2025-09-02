@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsy.module.system.heartbeat.mapper.SystemHeartbeatMapper">
+
+    <update id="updateHeartBeatTimeById">
+        update t_heart_beat_record
+        set heart_beat_time = #{heartBeatTime}
+        <where>
+            heart_beat_record_id = #{id}
+        </where>
+    </update>
+
+    <select id="page" resultType="com.zsy.module.system.heartbeat.domain.entity.SystemHeartbeatRecordEntity">
+        SELECT
+        *
+        FROM
+        system_heart_beat_record
+        <where>
+            <if test="pageForm.startDate != null ">
+                AND DATE_FORMAT(heart_beat_time, '%Y-%m-%d') &gt;= #{pageForm.startDate}
+            </if>
+            <if test="pageForm.endDate != null ">
+                AND DATE_FORMAT(heart_beat_time, '%Y-%m-%d') &lt;= #{pageForm.endDate}
+            </if>
+            <if test="pageForm.keywords != null and pageForm.keywords != ''">
+                AND (INSTR(project_path,#{pageForm.keywords}) or INSTR(server_ip,#{pageForm.keywords}) or INSTR(process_no,#{pageForm.keywords}))
+            </if>
+        </where>
+        order by heart_beat_time desc
+    </select>
+
+    <select id="query" resultType="com.zsy.module.system.heartbeat.domain.entity.SystemHeartbeatRecordEntity">
+        select * from system_heart_beat_record where project_path = #{projectPath} and server_ip = #{serverIp} and process_no =#{processNo}
+    </select>
+
+</mapper> 
