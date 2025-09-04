@@ -15,8 +15,8 @@ public interface SystemHeartbeatMapper extends BaseMapper<SystemHeartbeatRecordE
 
     List<SystemHeartbeatRecordEntity> page(Page<SystemHeartbeatRecordEntity> page, @Param("pageForm") SystemHeartbeatPageForm systemHeartBeatPageForm);
 
-    void updateHeartBeatTimeById(Long heartBeatRecordId, LocalDateTime heartBeatTime);
+    void updateHeartBeatTimeById(Long heartbeatRecordId, LocalDateTime heartbeatTime);
 
-    SystemHeartbeatRecordEntity query(SystemHeartbeatRecordEntity heartBeatRecordEntity);
+    SystemHeartbeatRecordEntity query(SystemHeartbeatRecordEntity heartbeatRecordEntity);
 
 }

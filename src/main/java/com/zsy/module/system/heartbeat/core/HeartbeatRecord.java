@@ -29,6 +29,6 @@ public class HeartbeatRecord {
     /**
      * 心跳当前时间
      */
-    private LocalDateTime heartBeatTime;
+    private LocalDateTime heartbeatTime;
 
 }

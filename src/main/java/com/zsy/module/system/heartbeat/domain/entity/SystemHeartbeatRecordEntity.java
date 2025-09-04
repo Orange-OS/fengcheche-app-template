@@ -9,14 +9,14 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-@TableName(value = "system_heart_beat_record")
+@TableName(value = "system_heartbeat_record")
 public class SystemHeartbeatRecordEntity implements Serializable {
 
     /**
      * 主键ID
      */
     @TableId(type = IdType.AUTO)
-    private Long heartBeatRecordId;
+    private Long heartbeatRecordId;
 
     /**
      * 项目路径
@@ -41,6 +41,6 @@ public class SystemHeartbeatRecordEntity implements Serializable {
     /**
      * 心跳当前时间
      */
-    private LocalDateTime heartBeatTime;
+    private LocalDateTime heartbeatTime;
 
 }

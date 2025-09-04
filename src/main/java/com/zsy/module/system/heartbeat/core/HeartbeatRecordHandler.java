@@ -30,7 +30,7 @@ public class HeartbeatRecordHandler implements IHeartbeatRecordHandler {
         if (heartBeatRecordOld == null) {
             systemHeartbeatMapper.insert(heartBeatRecordEntity);
         } else {
-            systemHeartbeatMapper.updateHeartBeatTimeById(heartBeatRecordOld.getHeartBeatRecordId(), heartBeatRecordEntity.getHeartBeatTime());
+            systemHeartbeatMapper.updateHeartBeatTimeById(heartBeatRecordOld.getHeartbeatRecordId(), heartBeatRecordEntity.getHeartbeatTime());
         }
     }
 

@@ -18,7 +18,7 @@ public class SystemHeartbeatController {
     @Resource
     private SystemHeartbeatService systemHeartBeatService;
 
-    @PostMapping("/system/heartBeat/page")
+    @PostMapping("/system/heartbeat/page")
     public Result<Page<SystemHeartbeatRecordEntity>> page(@RequestBody @Valid SystemHeartbeatPageForm systemHeartBeatPageForm) {
         return Result.success(systemHeartBeatService.getSystemHeartBeatPage(systemHeartBeatPageForm));
     }

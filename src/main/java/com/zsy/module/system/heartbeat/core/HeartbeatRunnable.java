@@ -61,7 +61,7 @@ public class HeartbeatRunnable implements Runnable {
         heartbeatRecord.setServerIp(StringUtils.join(this.serverIps, ";"));
         heartbeatRecord.setProcessNo(this.processNo);
         heartbeatRecord.setProcessStartTime(this.processStartTime);
-        heartbeatRecord.setHeartBeatTime(LocalDateTime.now());
+        heartbeatRecord.setHeartbeatTime(LocalDateTime.now());
         recordHandler.handler(heartbeatRecord);
     }
 
