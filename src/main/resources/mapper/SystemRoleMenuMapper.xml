@@ -5,4 +5,8 @@
     <delete id="deleteByRoleId">
         DELETE FROM system_role_menus WHERE role_id = #{roleId}
     </delete>
+
+    <delete id="deleteByMenuId">
+        DELETE FROM system_role_menus WHERE menu_id = #{menuId}
+    </delete>
 </mapper> 

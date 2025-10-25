@@ -17,4 +17,12 @@ public interface SystemRoleMenuMapper extends BaseMapper<SystemRoleMenuEntity> {
      * @return 影响行数
      */
     int deleteByRoleId(@Param("roleId") Long roleId);
+
+    /**
+     * 根据菜单ID删除角色菜单关联
+     * @param menuId 菜单ID
+     * @return 影响行数
+     */
+    int deleteByMenuId(@Param("menuId") Long menuId);
+
 } 

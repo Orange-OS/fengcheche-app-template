@@ -5,15 +5,18 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zsy.constant.CacheKeyConst;
+import com.zsy.framework.common.exception.BusinessException;
 import com.zsy.module.system.menu.domain.entity.SystemMenuEntity;
 import com.zsy.module.system.menu.domain.form.SystemMenuAddForm;
 import com.zsy.module.system.menu.domain.form.SystemMenuUpdateForm;
 import com.zsy.module.system.menu.mapper.SystemMenuMapper;
 import com.zsy.module.system.menu.service.SystemMenuService;
+import com.zsy.module.system.rolemenu.mapper.SystemRoleMenuMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,9 @@ import java.util.stream.Collectors;
  */
 @Service
 public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemMenuEntity> implements SystemMenuService {
+
+    @Resource
+    private SystemRoleMenuMapper systemRoleMenuMapper;
 
     @Override
     public List<SystemMenuEntity> getMenusByRoleId(Long roleId) {
@@ -117,6 +123,30 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
 
         // 更新
         updateById(systemMenuEntity);
+    }
+
+    @Override
+    public void delete(Long id) {
+        SystemMenuEntity systemMenuEntity = baseMapper.selectById(id);
+
+        if (systemMenuEntity != null) {
+            // 删除角色菜单关联
+            systemRoleMenuMapper.deleteByMenuId(id);
+
+            // 删除菜单
+            baseMapper.deleteById(systemMenuEntity);
+        }
+    }
+
+    @Override
+    public void updateMenuStatus(Long id, Integer status) {
+        SystemMenuEntity systemMenuEntity = this.getById(id);
+        if (systemMenuEntity == null) {
+            throw BusinessException.of("菜单不存在");
+        }
+
+        systemMenuEntity.setStatus(status);
+        this.updateById(systemMenuEntity);
     }
 
 } 

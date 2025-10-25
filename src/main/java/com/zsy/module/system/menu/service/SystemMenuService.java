@@ -51,4 +51,8 @@ public interface SystemMenuService extends IService<SystemMenuEntity> {
 
     void update(SystemMenuUpdateForm updateForm);
 
+    void delete(Long id);
+
+    void updateMenuStatus(Long id, Integer status);
+
 }

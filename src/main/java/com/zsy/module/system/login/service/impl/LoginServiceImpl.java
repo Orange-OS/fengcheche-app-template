@@ -102,9 +102,14 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public List<SystemMenuEntity> getUserMenuList() {
+
         // 获取当前登录用户ID
         Object loginId = StpUtil.getLoginId();
         Long userId = Long.parseLong(loginId.toString());
+
+        if (StpUtil.hasRole("admin")) {
+            userId = null;
+        }
 
         // 获取用户菜单树
         return systemMenuService.getMenuTreeByUserId(userId);

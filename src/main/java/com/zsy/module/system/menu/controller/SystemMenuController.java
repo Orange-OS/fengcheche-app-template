@@ -1,6 +1,7 @@
 package com.zsy.module.system.menu.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zsy.framework.common.pojo.Result;
 import com.zsy.module.system.menu.domain.entity.SystemMenuEntity;
@@ -38,6 +39,16 @@ public class SystemMenuController {
         return Result.success();
     }
 
+    /**
+     * 删除菜单
+     */
+    @DeleteMapping("/{id}")
+    @SaCheckPermission("system:menu:delete")
+    public Result<Void> delete(@PathVariable Long id) {
+        systemMenuService.delete(id);
+        return Result.success();
+    }
+
     @GetMapping("/list")
     @SaCheckPermission("system:menu:query")
     private Result<List<SystemMenuEntity>> list() {
@@ -56,9 +67,25 @@ public class SystemMenuController {
     @SaCheckPermission("system:menu:query")
     public Result<List<SystemMenuEntity>> getMenuTreeByUserId(@PathVariable Long userId) {
 
+        if (StpUtil.hasRole("admin")) {
+            userId = null;
+        }
+
         List<SystemMenuEntity> menuTree = systemMenuService.getMenuTreeByUserId(userId);
 
         return Result.success(menuTree);
+    }
+
+    /**
+     * 更新菜单状态
+     */
+    @PutMapping("/{id}/status")
+    @SaCheckPermission("system:menu:update")
+    public Result<Void> updateStatus(
+            @PathVariable Long id,
+            @RequestBody SystemMenuEntity statusUpdate) {
+        systemMenuService.updateMenuStatus(id, statusUpdate.getStatus());
+        return Result.success();
     }
 
 }
