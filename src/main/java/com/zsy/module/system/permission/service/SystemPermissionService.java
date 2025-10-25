@@ -58,4 +58,6 @@ public interface SystemPermissionService extends IService<SystemPermissionEntity
      * @param status 状态(0-禁用,1-正常)
      */
     void updatePermissionStatus(Long permissionId, Integer status);
-} 
+
+    List<SystemPermissionEntity> getPermissionTree();
+}

@@ -38,10 +38,10 @@ public class SystemPermissionController {
     @GetMapping
     @SaCheckPermission("system:permission:query")
     public Result<Page<SystemPermissionEntity>> page(
-            @RequestParam(defaultValue = "1") Integer current,
-            @RequestParam(defaultValue = "10") Integer size,
+            @RequestParam(defaultValue = "1") Integer pageNum,
+            @RequestParam(defaultValue = "10") Integer pageSize,
             SystemPermissionEntity permission) {
-        Page<SystemPermissionEntity> page = new Page<>(current, size);
+        Page<SystemPermissionEntity> page = new Page<>(pageNum, pageSize);
         LambdaQueryWrapper<SystemPermissionEntity> queryWrapper = new LambdaQueryWrapper<>();
 
         // 根据条件构建查询
@@ -162,11 +162,17 @@ public class SystemPermissionController {
      */
     @PutMapping("/{id}/status")
     @SaCheckPermission("system:permission:update")
-    public Result<Void> updateStatus(
-            @PathVariable Long id,
-            @RequestBody SystemPermissionEntity statusUpdate) {
+    public Result<Void> updateStatus(@PathVariable Long id, @RequestBody SystemPermissionEntity statusUpdate) {
         systemPermissionService.updatePermissionStatus(id, statusUpdate.getStatus());
         return Result.success();
+    }
+
+    @GetMapping("/permission-tree")
+    @SaCheckPermission("system:permission:query")
+    public Result<List<SystemPermissionEntity>> getPermissionTree() {
+        List<SystemPermissionEntity> permissionTree = systemPermissionService.getPermissionTree();
+
+        return Result.success(permissionTree);
     }
 
 } 
