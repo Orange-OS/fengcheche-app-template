@@ -1,7 +1,6 @@
 package com.zsy.module.life.medicationrecord.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.zsy.framework.common.pojo.Result;
 import com.zsy.module.life.medicationrecord.domain.form.MedicationRecordAddForm;
 import com.zsy.module.life.medicationrecord.domain.form.MedicationRecordUpdateForm;
