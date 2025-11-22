@@ -1,4 +1,4 @@
-package com.zsy.module.system.captcha.domain;
+package com.zsy.module.system.captcha.domain.vo;
 
 import lombok.Data;
 

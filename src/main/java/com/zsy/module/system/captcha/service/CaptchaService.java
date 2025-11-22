@@ -6,13 +6,17 @@ import cn.hutool.core.img.ImgUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.zsy.common.constant.StringConst;
 import com.zsy.constant.RedisKeyConst;
-import com.zsy.module.system.captcha.domain.CaptchaVO;
+import com.zsy.framework.common.pojo.Result;
+import com.zsy.module.system.captcha.domain.form.CaptchaForm;
+import com.zsy.module.system.captcha.domain.vo.CaptchaVO;
 import com.zsy.module.system.redis.service.RedisService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.awt.*;
+import java.util.Objects;
 import java.util.UUID;
 
 @Slf4j
@@ -30,6 +34,7 @@ public class CaptchaService {
      * 默认 1 分钟有效期
      */
     public CaptchaVO generateCaptcha() {
+
         //生成四位验证码
         String captchaText = RandomUtil.randomNumbers(4);
 
@@ -47,7 +52,7 @@ public class CaptchaService {
 
         /*
          * 返回验证码对象
-         * 图片 base64格式
+         * 图片base64格式
          */
         // UUID 唯一标识
         String uuid = UUID.randomUUID().toString().replace("-", StringConst.EMPTY);
@@ -61,27 +66,28 @@ public class CaptchaService {
         return captchaVO;
     }
 
-//    /**
-//     * 校验图形验证码
-//     */
-//    public ResponseDTO<String> checkCaptcha(CaptchaForm captchaForm) {
-//        if (StringUtils.isBlank(captchaForm.getCaptchaUuid()) || StringUtils.isBlank(captchaForm.getCaptchaCode())) {
-//            return ResponseDTO.userErrorParam("请输入正确验证码");
-//        }
-//        /*
-//         * 1、校验redis里的验证码
-//         * 2、校验成功后，删除redis
-//         */
-//        String redisCaptchaKey = redisService.generateRedisKey(RedisKeyConst.Support.CAPTCHA, captchaForm.getCaptchaUuid());
-//        String redisCaptchaCode = redisService.get(redisCaptchaKey);
-//        if (StringUtils.isBlank(redisCaptchaCode)) {
-//            return ResponseDTO.userErrorParam("验证码已过期，请刷新重试");
-//        }
-//        if (!Objects.equals(redisCaptchaCode, captchaForm.getCaptchaCode())) {
-//            return ResponseDTO.userErrorParam("验证码错误，请输入正确的验证码");
-//        }
-//        // 删除已使用的验证码
-//        redisService.delete(redisCaptchaKey);
-//        return ResponseDTO.ok();
-//    }
+    /**
+     * 校验图形验证码
+     */
+    public Result<String> checkCaptcha(CaptchaForm captchaForm) {
+        if (StringUtils.isBlank(captchaForm.getCaptchaUuid()) || StringUtils.isBlank(captchaForm.getCaptcha())) {
+            return Result.warning("请输入正确验证码");
+        }
+
+        /*
+         * 1、校验redis里的验证码
+         * 2、校验成功后，删除redis
+         */
+        String redisCaptchaKey = redisService.generateRedisKey(RedisKeyConst.Support.CAPTCHA, captchaForm.getCaptchaUuid());
+        String redisCaptchaCode = redisService.get(redisCaptchaKey);
+        if (StringUtils.isBlank(redisCaptchaCode)) {
+            return Result.warning("验证码已过期，请刷新重试");
+        }
+        if (!Objects.equals(redisCaptchaCode, captchaForm.getCaptcha())) {
+            return Result.warning("验证码错误，请输入正确的验证码");
+        }
+        // 删除已使用的验证码
+        redisService.delete(redisCaptchaKey);
+        return Result.success();
+    }
 }

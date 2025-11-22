@@ -1,4 +1,4 @@
-package com.zsy.module.system.login.domain;
+package com.zsy.module.system.login.domain.vo;
 
 import com.zsy.module.system.user.domain.SystemUserEntity;
 import lombok.Data;

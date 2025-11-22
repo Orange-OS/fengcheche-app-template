@@ -2,8 +2,8 @@ package com.zsy.module.system.login.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
 import com.zsy.framework.common.pojo.Result;
-import com.zsy.module.system.login.domain.LoginResultVO;
-import com.zsy.module.system.login.domain.SystemUserLoginForm;
+import com.zsy.module.system.login.domain.vo.LoginResultVO;
+import com.zsy.module.system.login.domain.form.SystemUserLoginForm;
 import com.zsy.module.system.login.service.LoginService;
 import com.zsy.module.system.menu.domain.entity.SystemMenuEntity;
 import com.zsy.module.system.permission.domain.entity.SystemPermissionEntity;
@@ -28,7 +28,7 @@ public class LoginController {
      */
     @PostMapping("/login")
     public Result<LoginResultVO> login(@RequestBody SystemUserLoginForm systemUserLoginForm) {
-        return Result.success(loginService.login(systemUserLoginForm));
+        return loginService.login(systemUserLoginForm);
     }
     
     /**

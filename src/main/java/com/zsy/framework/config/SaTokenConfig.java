@@ -21,7 +21,7 @@ public class SaTokenConfig implements WebMvcConfigurer {
             // 指定一条拦截规则：拦截所有 path
             SaRouter.match("/**")
                     // 排除登录接口和静态资源
-                    .notMatch("/system/auth/login", "/system/user/register", "/doc.html", "/webjars/**", "/swagger-resources/**")
+                    .notMatch("/system/auth/login", "/system-captcha/generate", "/system/user/register", "/doc.html", "/webjars/**", "/swagger-resources/**")
                     // 检查是否登录
                     .check(r -> StpUtil.checkLogin());
                     
@@ -37,13 +37,15 @@ public class SaTokenConfig implements WebMvcConfigurer {
 
     }
 
-    // 添加CORS配置
-//    @Override
-//    public void addCorsMappings(CorsRegistry registry) {
-//        registry.addMapping("/**")
-//                .allowedOrigins("http://localhost:1234") // 允许前端域名
-//                .allowedMethods("GET", "POST", "PUT", "DELETE") // 允许的请求方法
-//                .allowCredentials(true) // 允许携带凭证
-//                .maxAge(3600); // 预检请求缓存时间
-//    }
+    /**
+     * 全局CORS配置
+     */
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOriginPatterns("*")  // 使用 allowedOriginPatterns 代替 allowedOrigins
+                .allowedMethods("GET", "POST", "PUT", "DELETE") // 允许的请求方法
+                .allowCredentials(true) // 允许携带凭证
+                .maxAge(3600); // 预检请求缓存时间
+    }
 } 

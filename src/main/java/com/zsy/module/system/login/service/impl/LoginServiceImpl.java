@@ -4,8 +4,10 @@ import cn.dev33.satoken.secure.SaSecureUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import com.zsy.framework.common.exception.BusinessException;
-import com.zsy.module.system.login.domain.LoginResultVO;
-import com.zsy.module.system.login.domain.SystemUserLoginForm;
+import com.zsy.framework.common.pojo.Result;
+import com.zsy.module.system.captcha.service.CaptchaService;
+import com.zsy.module.system.login.domain.form.SystemUserLoginForm;
+import com.zsy.module.system.login.domain.vo.LoginResultVO;
 import com.zsy.module.system.login.service.LoginService;
 import com.zsy.module.system.menu.domain.entity.SystemMenuEntity;
 import com.zsy.module.system.menu.service.SystemMenuService;
@@ -37,8 +39,19 @@ public class LoginServiceImpl implements LoginService {
     @Resource
     private SystemPermissionService systemPermissionService;
 
+    @Resource
+    private CaptchaService captchaService;
+
     @Override
-    public LoginResultVO login(SystemUserLoginForm systemUserLoginForm) {
+    public Result<LoginResultVO> login(SystemUserLoginForm systemUserLoginForm) {
+
+        // 校验 图形验证码
+        Result<String> checkCaptcha = captchaService.checkCaptcha(systemUserLoginForm);
+
+        if (!checkCaptcha.isSuccess()) {
+            return Result.warning(checkCaptcha.getMsg());
+        }
+
         String username = systemUserLoginForm.getUsername();
         String password = systemUserLoginForm.getPassword();
 
@@ -78,7 +91,7 @@ public class LoginServiceImpl implements LoginService {
         user.setPassword("***");
         loginResultVO.setUserInfo(user);
 
-        return loginResultVO;
+        return Result.success(loginResultVO);
     }
 
     @Override
