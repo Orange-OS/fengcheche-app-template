@@ -21,10 +21,17 @@ public class SaTokenConfig implements WebMvcConfigurer {
             // 指定一条拦截规则：拦截所有 path
             SaRouter.match("/**")
                     // 排除登录接口和静态资源
-                    .notMatch("/system/auth/login", "/system-captcha/generate", "/system/user/register", "/doc.html", "/webjars/**", "/swagger-resources/**")
+                    .notMatch(
+                            "/system/auth/login",             // 登录接口
+                            "/system-captcha/generate",                // 验证码接口
+                            "/system/user/register",
+                            "/doc.html",
+                            "/webjars/**",
+                            "/swagger-ui/**", "/swagger-resources/**" // swagger
+                    )
                     // 检查是否登录
                     .check(r -> StpUtil.checkLogin());
-                    
+
             // 权限认证规则
             SaRouter.match("/**", r -> {
                 // 用户有 admin 角色

@@ -2,8 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zsy.module.system.user.mapper.SystemUserMapper">
 
-    <select id="selectByUsername" resultType="com.zsy.module.system.user.domain.SystemUserEntity">
-        SELECT * FROM system_users WHERE username = #{username}
+    <select id="selectByUsername" resultType="com.zsy.module.system.user.domain.entity.SystemUserEntity">
+        SELECT *
+        FROM system_users
+        WHERE username = #{username}
+    </select>
+
+    <select id="selectListByUsername" resultType="com.zsy.module.system.user.domain.entity.SystemUserEntity">
+        SELECT * FROM system_users
+        <where>
+            <if test="username != null and username != ''">
+                username LIKE CONCAT('%', #{username}, '%')
+            </if>
+        </where>
     </select>
     
 </mapper> 

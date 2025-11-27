@@ -2,11 +2,20 @@ package com.zsy.module.system.user.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zsy.module.system.user.domain.SystemUserEntity;
+import com.zsy.framework.common.pojo.Result;
+import com.zsy.module.system.user.domain.entity.SystemUserEntity;
+import com.zsy.module.system.user.domain.form.SystemUserCreateForm;
+import com.zsy.module.system.user.domain.form.SystemUserUpdateForm;
 
 import java.util.List;
 
 public interface SystemUserService extends IService<SystemUserEntity> {
+
+    /**
+     * 创建用户
+     */
+    Result<Void> createUser(SystemUserCreateForm createForm);
+
     /**
      * 获取用户列表（已脱敏）
      */
@@ -23,14 +32,9 @@ public interface SystemUserService extends IService<SystemUserEntity> {
     SystemUserEntity getUserById(Long id);
 
     /**
-     * 创建用户
-     */
-    void createUser(SystemUserEntity user);
-
-    /**
      * 更新用户信息
      */
-    void updateUser(SystemUserEntity user);
+    void updateUser(SystemUserUpdateForm updateForm);
 
     /**
      * 删除用户
@@ -40,17 +44,17 @@ public interface SystemUserService extends IService<SystemUserEntity> {
     /**
      * 修改用户密码
      */
-    void changePassword(Long userId, String oldPassword, String newPassword);
+    Result<Void> changePassword(Long userId, String oldPassword, String newPassword);
 
     /**
      * 重置用户密码
      */
-    void resetPassword(Long id);
+    Result<Void> resetPassword(Long id);
 
     /**
      * 更新用户状态
      */
-    void updateUserStatus(Long id, Integer status);
+    Result<Void> updateUserStatus(Long id, Integer status);
 
     /**
      * 检查用户名是否存在

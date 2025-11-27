@@ -21,4 +21,16 @@
         ORDER BY m.sort
     </select>
 
+    <select id="queryMenuList" resultType="com.zsy.module.system.menu.domain.entity.SystemMenuEntity">
+        SELECT * from system_menus
+        where status = #{status}
+        <if test="menuTypeList != null and menuTypeList.size > 0">
+            and menu_type in
+            <foreach collection="menuTypeList" open="(" close=")" item="item" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        order by parent_id desc,sort asc
+    </select>
+
 </mapper> 

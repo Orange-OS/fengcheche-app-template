@@ -1,7 +1,7 @@
 package com.zsy.module.system.userrole.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zsy.module.system.userrole.domain.SystemUserRoleEntity;
+import com.zsy.module.system.userrole.domain.entity.SystemUserRoleEntity;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -12,12 +12,12 @@ import java.util.List;
 public interface SystemUserRoleMapper extends BaseMapper<SystemUserRoleEntity> {
     
     /**
-     * 根据用户ID查询角色ID列表
-     * @param userId 用户ID
-     * @return 角色ID列表
+     * 根据用户ID查询所有角色ID
      */
-    List<Long> selectRoleIdsByUserId(@Param("userId") Long userId);
-    
+    List<Long> selectRoleIdByUserId(@Param("userId") Long userId);
+
+    List<Long> selectIdsByUserId(@Param("userId") Long userId);
+
     /**
      * 根据用户ID删除用户角色关联
      * @param userId 用户ID

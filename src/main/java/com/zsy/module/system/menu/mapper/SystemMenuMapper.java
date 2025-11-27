@@ -26,4 +26,12 @@ public interface SystemMenuMapper extends BaseMapper<SystemMenuEntity> {
      * @return 菜单列表
      */
     List<SystemMenuEntity> selectByUserId(@Param("userId") Long userId);
+
+    /**
+     * 查询菜单列表
+     *
+     * @param status  是否停用（0停用 1正常）
+     * @param menuTypeList 菜单类型集合（M目录 C菜单 F按钮）
+     */
+    List<SystemMenuEntity> queryMenuList(@Param("status") Integer status, @Param("menuTypeList") List<String> menuTypeList);
 }

@@ -1,6 +1,6 @@
 package com.zsy.module.system.login.domain.vo;
 
-import com.zsy.module.system.user.domain.SystemUserEntity;
+import com.zsy.module.system.user.domain.entity.SystemUserEntity;
 import lombok.Data;
 
 import java.io.Serializable;
