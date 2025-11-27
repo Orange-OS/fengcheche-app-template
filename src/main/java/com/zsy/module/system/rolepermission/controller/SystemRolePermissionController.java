@@ -14,10 +14,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/system/role-permission")
 public class SystemRolePermissionController {
-    
+
     @Resource
     private SystemRolePermissionService systemRolePermissionService;
-    
+
     /**
      * 获取角色权限ID列表
      */
@@ -26,7 +26,7 @@ public class SystemRolePermissionController {
         List<Long> permissionIds = systemRolePermissionService.getPermissionIdsByRoleId(roleId);
         return Result.success(permissionIds);
     }
-    
+
     /**
      * 分配角色权限
      */

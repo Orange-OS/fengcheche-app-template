@@ -3,10 +3,37 @@
 <mapper namespace="com.zsy.module.system.rolemenu.mapper.SystemRoleMenuMapper">
 
     <delete id="deleteByRoleId">
-        DELETE FROM system_role_menus WHERE role_id = #{roleId}
+        DELETE
+        FROM system_role_menus
+        WHERE role_id = #{roleId}
     </delete>
 
     <delete id="deleteByMenuId">
-        DELETE FROM system_role_menus WHERE menu_id = #{menuId}
+        DELETE
+        FROM system_role_menus
+        WHERE menu_id = #{menuId}
     </delete>
+
+    <select id="queryPermissionsByUserId" resultType="com.zsy.module.system.menu.domain.entity.SystemMenuEntity">
+        SELECT DISTINCT m.*
+        FROM system_menus m
+                 INNER JOIN system_role_menus rm ON m.id = rm.menu_id
+                 INNER JOIN system_user_roles ur ON rm.role_id = ur.role_id
+        WHERE ur.user_id = #{userId}
+    </select>
+
+    <select id="queryPermissionIdsByRoleId" resultType="java.lang.Long">
+        SELECT t.menu_id
+        FROM system_role_menus t
+        WHERE t.role_id = #{roleId}
+    </select>
+
+    <select id="selectListByUserId" resultType="com.zsy.module.system.menu.domain.entity.SystemMenuEntity">
+        SELECT DISTINCT m.*
+        FROM system_menus m
+                 INNER JOIN system_role_menus rm ON m.id = rm.menu_id
+                 INNER JOIN system_user_roles ur ON rm.role_id = ur.role_id
+        WHERE ur.user_id = #{userId}
+          AND m.type == 'F'
+    </select>
 </mapper> 

@@ -85,3 +85,16 @@ sa-token:
 logging:
   level:
     org.mybatis: DEBUG
+
+# 心跳配置
+heart-beat:
+  interval-seconds: 60
+
+# Swagger 配置
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+  packages-to-scan: com.zsy

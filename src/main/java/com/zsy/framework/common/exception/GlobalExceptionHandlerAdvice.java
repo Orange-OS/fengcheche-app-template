@@ -5,6 +5,7 @@ import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.exception.NotRoleException;
 import com.zsy.framework.common.pojo.Result;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 /**
@@ -93,6 +96,16 @@ public class GlobalExceptionHandlerAdvice {
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.joining(", "));
         log.error("约束违反异常：{}", message);
+        return Result.error(400, message);
+    }
+
+    /**
+     * 处理唯一索引异常
+     */
+    @ExceptionHandler(DuplicateKeyException.class)
+    public Result<Void> handleConstraintViolationException(DuplicateKeyException e) {
+        String message = e.getMessage();
+        log.error("唯一索引违反异常：{}", message);
         return Result.error(400, message);
     }
     

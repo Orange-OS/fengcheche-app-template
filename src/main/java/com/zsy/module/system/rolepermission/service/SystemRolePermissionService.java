@@ -1,14 +1,21 @@
 package com.zsy.module.system.rolepermission.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zsy.module.system.rolepermission.domain.SystemRolePermissionEntity;
+import com.zsy.module.system.rolepermission.domain.vo.RolePermissionTreeVO;
 
 import java.util.List;
 
 /**
  * 角色-权限关联 Service 接口
  */
-public interface SystemRolePermissionService extends IService<SystemRolePermissionEntity> {
+public interface SystemRolePermissionService {
+
+    /**
+     * 根据用户ID查询权限编码列表
+     * @param userId 用户ID
+     * @return 权限编码列表
+     */
+    List<String> getPermissionCodesByUserId(Long userId);
     
     /**
      * 根据角色ID获取权限ID列表

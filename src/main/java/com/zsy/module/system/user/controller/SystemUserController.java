@@ -4,7 +4,9 @@ import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zsy.framework.common.pojo.Result;
-import com.zsy.module.system.user.domain.SystemUserEntity;
+import com.zsy.module.system.user.domain.entity.SystemUserEntity;
+import com.zsy.module.system.user.domain.form.SystemUserCreateForm;
+import com.zsy.module.system.user.domain.form.SystemUserUpdateForm;
 import com.zsy.module.system.user.service.SystemUserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,68 @@ import java.util.List;
 public class SystemUserController {
     @Resource
     private SystemUserService systemUserService;
+
+
+    /**
+     * 新增用户
+     */
+    @PostMapping
+    @SaCheckPermission("system:user:create")
+    public Result<Void> create(@RequestBody SystemUserCreateForm createForm) {
+        return systemUserService.createUser(createForm);
+    }
+
+    /**
+     * 修改用户
+     */
+    @PutMapping("/{id}")
+    @SaCheckPermission("system:user:update")
+    public Result<Void> update(@RequestBody SystemUserUpdateForm updateForm) {
+        systemUserService.updateUser(updateForm);
+        return Result.success();
+    }
+
+    /**
+     * 删除用户
+     */
+    @DeleteMapping("/{id}")
+    @SaCheckPermission("system:user:delete")
+    public Result<Void> delete(@PathVariable Long id) {
+        systemUserService.deleteUser(id);
+        return Result.success();
+    }
+
+    /**
+     * 修改密码
+     */
+    @PostMapping("/change-password")
+    @SaCheckPermission("system:user:update")
+    public Result<Void> changePassword(
+            @RequestParam Long userId,
+            @RequestParam String oldPassword,
+            @RequestParam String newPassword) {
+        return systemUserService.changePassword(userId, oldPassword, newPassword);
+    }
+
+    /**
+     * 重置密码
+     */
+    @PostMapping("/reset-password/{id}")
+    @SaCheckPermission("system:user:update")
+    public Result<Void> resetPassword(@PathVariable Long id) {
+        return systemUserService.resetPassword(id);
+    }
+
+    /**
+     * 更新用户状态
+     */
+    @PutMapping("/{id}/status")
+    @SaCheckPermission("system:user:update")
+    public Result<Void> updateStatus(
+            @PathVariable Long id,
+            @RequestBody SystemUserEntity statusUpdate) {
+        return systemUserService.updateUserStatus(id, statusUpdate.getStatus());
+    }
 
     /**
      * 获取用户列表
@@ -47,68 +111,4 @@ public class SystemUserController {
     public Result<SystemUserEntity> getUser(@PathVariable Long id) {
         return Result.success(systemUserService.getUserById(id));
     }
-
-    /**
-     * 新增用户
-     */
-    @PostMapping
-    @SaCheckPermission("system:user:create")
-    public Result<Void> add(@RequestBody SystemUserEntity user) {
-        systemUserService.createUser(user);
-        return Result.success();
-    }
-
-    /**
-     * 修改用户
-     */
-    @PutMapping("/{id}")
-    @SaCheckPermission("system:user:update")
-    public Result<Void> update(@RequestBody SystemUserEntity user) {
-        systemUserService.updateUser(user);
-        return Result.success();
-    }
-
-    /**
-     * 删除用户
-     */
-    @DeleteMapping("/{id}")
-    @SaCheckPermission("system:user:delete")
-    public Result<Void> delete(@PathVariable Long id) {
-        systemUserService.deleteUser(id);
-        return Result.success();
-    }
-
-    /**
-     * 修改密码
-     */
-    @PostMapping("/change-password")
-    public Result<Void> changePassword(
-            @RequestParam Long userId,
-            @RequestParam String oldPassword,
-            @RequestParam String newPassword) {
-        systemUserService.changePassword(userId, oldPassword, newPassword);
-        return Result.success();
-    }
-
-    /**
-     * 重置密码
-     */
-    @PostMapping("/reset-password/{id}")
-    public Result<Void> resetPassword(@PathVariable Long id) {
-        systemUserService.resetPassword(id);
-        return Result.success();
-    }
-
-    /**
-     * 更新用户状态
-     */
-    @PutMapping("/{id}/status")
-    @SaCheckPermission("system:user:update")
-    public Result<Void> updateStatus(
-            @PathVariable Long id,
-            @RequestBody SystemUserEntity statusUpdate) {
-        systemUserService.updateUserStatus(id, statusUpdate.getStatus());
-        return Result.success();
-    }
-
 }

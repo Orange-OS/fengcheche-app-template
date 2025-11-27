@@ -123,4 +123,19 @@ public class Result<T> implements Serializable {
     public boolean isError() {
         return !success;
     }
+
+    // -------------------------------------------- 警告 --------------------------------------------
+
+    /**
+     * 警告结果（自定义消息）
+     */
+    public static <T> Result<T> warning(String msg) {
+        return build(false, 400, msg, null);
+    }
+
+    public static <T> Result<T> warning(String msg, T data) {
+        return build(false, 400, msg, data);
+    }
+
+
 }
