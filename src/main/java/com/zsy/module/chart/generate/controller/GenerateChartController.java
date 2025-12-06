@@ -1,6 +1,6 @@
 package com.zsy.module.chart.generate.controller;
 
-import com.zsy.framework.common.pojo.Result;
+import com.zsy.common.domain.Result;
 import com.zsy.module.chart.generate.service.GenerateChartService;
 import org.springframework.web.bind.annotation.GetMapping;
 

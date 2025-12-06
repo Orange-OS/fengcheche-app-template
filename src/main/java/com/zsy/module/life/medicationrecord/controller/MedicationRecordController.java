@@ -2,7 +2,7 @@ package com.zsy.module.life.medicationrecord.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.zsy.framework.common.pojo.Result;
+import com.zsy.common.domain.Result;
 import com.zsy.module.life.medicationrecord.domain.form.MedicationRecordAddForm;
 import com.zsy.module.life.medicationrecord.domain.form.MedicationRecordUpdateForm;
 import com.zsy.module.life.medicationrecord.domain.vo.MedicationRecordVO;
