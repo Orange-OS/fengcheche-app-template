@@ -1,7 +1,7 @@
 package com.zsy.module.system.heartbeat.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.zsy.framework.common.pojo.Result;
+import com.zsy.common.domain.Result;
 import com.zsy.module.system.heartbeat.domain.entity.SystemHeartbeatRecordEntity;
 import com.zsy.module.system.heartbeat.domain.form.SystemHeartbeatPageForm;
 import com.zsy.module.system.heartbeat.service.SystemHeartbeatService;

@@ -2,7 +2,7 @@ package com.zsy.module.system.user.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zsy.framework.common.pojo.Result;
+import com.zsy.common.domain.Result;
 import com.zsy.module.system.user.domain.entity.SystemUserEntity;
 import com.zsy.module.system.user.domain.form.SystemUserCreateForm;
 import com.zsy.module.system.user.domain.form.SystemUserUpdateForm;

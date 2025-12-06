@@ -1,4 +1,4 @@
-package com.zsy.framework.common.pojo;
+package com.zsy.common.domain;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.mapstruct.Mapper;

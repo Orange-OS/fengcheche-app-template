@@ -3,7 +3,7 @@ package com.zsy.module.system.menu.controller;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.zsy.framework.common.pojo.Result;
+import com.zsy.common.domain.Result;
 import com.zsy.module.system.menu.domain.entity.SystemMenuEntity;
 import com.zsy.module.system.menu.domain.form.SystemMenuAddForm;
 import com.zsy.module.system.menu.domain.form.SystemMenuUpdateForm;

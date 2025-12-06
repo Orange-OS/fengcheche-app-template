@@ -1,4 +1,4 @@
-package com.zsy.framework.common.pojo;
+package com.zsy.common.domain;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

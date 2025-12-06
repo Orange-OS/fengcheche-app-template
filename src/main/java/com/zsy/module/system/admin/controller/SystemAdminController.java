@@ -1,13 +1,10 @@
 package com.zsy.module.system.admin.controller;
 
 import cn.dev33.satoken.annotation.SaCheckRole;
-import com.zsy.framework.common.pojo.Result;
+import com.zsy.common.domain.Result;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 系统管理员控制器

@@ -1,6 +1,6 @@
 package com.zsy.module.system.rolepermission.controller;
 
-import com.zsy.framework.common.pojo.Result;
+import com.zsy.common.domain.Result;
 import com.zsy.module.system.rolepermission.domain.vo.RolePermissionVO;
 import com.zsy.module.system.rolepermission.service.SystemRolePermissionService;
 import org.springframework.web.bind.annotation.*;

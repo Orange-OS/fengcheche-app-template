@@ -1,6 +1,6 @@
 package com.zsy.module.system.heartbeat.domain.form;
 
-import com.zsy.framework.common.pojo.PageParam;
+import com.zsy.common.domain.PageParam;
 import lombok.Data;
 
 import java.time.LocalDate;

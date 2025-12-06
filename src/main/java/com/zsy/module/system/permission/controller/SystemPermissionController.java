@@ -1,7 +1,7 @@
 package com.zsy.module.system.permission.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import com.zsy.framework.common.pojo.Result;
+import com.zsy.common.domain.Result;
 import com.zsy.module.system.permission.domain.form.PermissionTreeUpdateForm;
 import com.zsy.module.system.permission.domain.vo.PermissionTreeVO;
 import com.zsy.module.system.permission.service.SystemPermissionService;

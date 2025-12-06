@@ -1,4 +1,4 @@
-package com.zsy.framework.common.pojo;
+package com.zsy.common.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;

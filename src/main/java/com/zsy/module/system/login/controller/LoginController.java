@@ -1,12 +1,11 @@
 package com.zsy.module.system.login.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
-import com.zsy.framework.common.pojo.Result;
+import com.zsy.common.domain.Result;
 import com.zsy.module.system.login.domain.form.SystemUserLoginForm;
 import com.zsy.module.system.login.domain.vo.LoginResultVO;
 import com.zsy.module.system.login.service.LoginService;
 import com.zsy.module.system.menu.domain.entity.SystemMenuEntity;
-import com.zsy.module.system.rolemenu.domain.entity.SystemRoleMenuEntity;
 import com.zsy.module.system.user.domain.entity.SystemUserEntity;
 import org.springframework.web.bind.annotation.*;
 

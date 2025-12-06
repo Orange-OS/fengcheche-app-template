@@ -2,7 +2,7 @@ package com.zsy.module.system.config.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.zsy.framework.common.pojo.Result;
+import com.zsy.common.domain.Result;
 import com.zsy.module.system.config.domain.entity.SystemConfigEntity;
 import com.zsy.module.system.config.domain.form.SystemConfigAddForm;
 import com.zsy.module.system.config.domain.form.SystemConfigPageForm;

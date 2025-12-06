@@ -2,7 +2,7 @@ package com.zsy.module.system.role.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.zsy.framework.common.pojo.Result;
+import com.zsy.common.domain.Result;
 import com.zsy.module.system.role.domain.entity.SystemRoleEntity;
 import com.zsy.module.system.role.domain.form.SystemRoleAddForm;
 import com.zsy.module.system.role.domain.form.SystemRoleUpdateForm;

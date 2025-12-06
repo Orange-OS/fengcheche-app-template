@@ -2,7 +2,7 @@ package com.zsy.module.system.userrole.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import com.zsy.framework.common.pojo.Result;
+import com.zsy.common.domain.Result;
 import com.zsy.module.system.userrole.domain.vo.SystemUserRoleVO;
 import com.zsy.module.system.userrole.service.SystemUserRoleService;
 import org.springframework.web.bind.annotation.GetMapping;

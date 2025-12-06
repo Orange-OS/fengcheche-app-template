@@ -6,7 +6,7 @@ import cn.hutool.core.img.ImgUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.zsy.common.constant.StringConst;
 import com.zsy.constant.RedisKeyConst;
-import com.zsy.framework.common.pojo.Result;
+import com.zsy.common.domain.Result;
 import com.zsy.module.system.captcha.domain.form.CaptchaForm;
 import com.zsy.module.system.captcha.domain.vo.CaptchaVO;
 import com.zsy.module.system.redis.service.RedisService;

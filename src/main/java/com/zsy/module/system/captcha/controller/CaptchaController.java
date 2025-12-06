@@ -1,6 +1,6 @@
 package com.zsy.module.system.captcha.controller;
 
-import com.zsy.framework.common.pojo.Result;
+import com.zsy.common.domain.Result;
 import com.zsy.module.system.captcha.domain.vo.CaptchaVO;
 import com.zsy.module.system.captcha.service.CaptchaService;
 import org.springframework.web.bind.annotation.GetMapping;

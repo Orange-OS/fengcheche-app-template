@@ -1,4 +1,4 @@
-package com.zsy.framework.common.pojo;
+package com.zsy.common.domain;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Data;
@@ -19,5 +19,4 @@ public class PageParam implements Serializable {
     public Page pageParam () {
         return new Page<>(pageNo, pageSize);
     }
-
 }

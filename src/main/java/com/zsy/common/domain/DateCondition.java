@@ -1,4 +1,4 @@
-package com.zsy.framework.common.pojo;
+package com.zsy.common.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

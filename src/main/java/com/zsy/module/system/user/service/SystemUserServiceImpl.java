@@ -4,8 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zsy.framework.common.exception.BusinessException;
-import com.zsy.framework.common.pojo.Result;
+import com.zsy.common.domain.Result;
 import com.zsy.module.system.user.domain.entity.SystemUserEntity;
 import com.zsy.module.system.user.domain.form.SystemUserCreateForm;
 import com.zsy.module.system.user.domain.form.SystemUserUpdateForm;
@@ -16,7 +15,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import cn.dev33.satoken.secure.SaSecureUtil;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.List;

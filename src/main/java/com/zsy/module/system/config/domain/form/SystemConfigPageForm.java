@@ -1,6 +1,6 @@
 package com.zsy.module.system.config.domain.form;
 
-import com.zsy.framework.common.pojo.PageParam;
+import com.zsy.common.domain.PageParam;
 import lombok.Data;
 
 @Data
