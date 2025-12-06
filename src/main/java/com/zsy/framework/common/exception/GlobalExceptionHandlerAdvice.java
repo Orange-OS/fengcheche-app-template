@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.Arrays;
 import java.util.stream.Collectors;
 
 /**
@@ -25,7 +23,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandlerAdvice {
-    
+
     /**
      * 处理业务异常
      */
@@ -34,7 +32,7 @@ public class GlobalExceptionHandlerAdvice {
         log.error("业务异常：{}", e.getMessage());
         return Result.error(e.getCode(), e.getMessage());
     }
-    
+
     /**
      * 处理未登录异常
      */
@@ -43,7 +41,7 @@ public class GlobalExceptionHandlerAdvice {
         log.error("未登录异常：{}", e.getMessage());
         return Result.error(401, "未登录或登录已过期");
     }
-    
+
     /**
      * 处理无权限异常
      */
@@ -52,7 +50,7 @@ public class GlobalExceptionHandlerAdvice {
         log.error("无权限异常：{}", e.getMessage());
         return Result.error(403, "无此权限：" + e.getPermission());
     }
-    
+
     /**
      * 处理无角色异常
      */
@@ -61,7 +59,7 @@ public class GlobalExceptionHandlerAdvice {
         log.error("无角色异常：{}", e.getMessage());
         return Result.error(403, "无此角色：" + e.getRole());
     }
-    
+
     /**
      * 处理参数校验异常
      */
@@ -74,7 +72,7 @@ public class GlobalExceptionHandlerAdvice {
         log.error("参数校验异常：{}", message);
         return Result.error(400, message);
     }
-    
+
     /**
      * 处理参数绑定异常
      */
@@ -86,7 +84,7 @@ public class GlobalExceptionHandlerAdvice {
         log.error("参数绑定异常：{}", message);
         return Result.error(400, message);
     }
-    
+
     /**
      * 处理约束违反异常
      */
@@ -108,7 +106,7 @@ public class GlobalExceptionHandlerAdvice {
         log.error("唯一索引违反异常：{}", message);
         return Result.error(400, message);
     }
-    
+
     /**
      * 处理其他异常
      */
@@ -116,5 +114,23 @@ public class GlobalExceptionHandlerAdvice {
     public Result<Void> handleException(Exception e) {
         log.error("系统异常", e);
         return Result.error(500, "系统异常，请联系管理员");
+    }
+
+    /**
+     * 处理数据存在异常
+     */
+    @ExceptionHandler(DataExistException.class)
+    public Result<Void> handleDataExistException(DataExistException e) {
+        log.error("数据存在异常", e);
+        return Result.error(e.getCode(), e.toString());
+    }
+
+    /**
+     * 处理数据不存在异常
+     */
+    @ExceptionHandler(DataNotExistException.class)
+    public Result<Void> handleDataNotExistException(DataNotExistException e) {
+        log.error("数据不存在异常", e);
+        return Result.error(e.getCode(), e.toString());
     }
 }

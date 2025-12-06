@@ -21,8 +21,8 @@ public class SystemConfigController {
 
     @PostMapping
     @SaCheckPermission("system:config:add")
-    private Result<Void> add(@RequestBody SystemConfigAddForm systemConfigAddForm) {
-        systemConfigService.add(systemConfigAddForm);
+    private Result<Void> create(@RequestBody SystemConfigAddForm systemConfigAddForm) {
+        systemConfigService.create(systemConfigAddForm);
         return Result.success();
     }
 
@@ -46,4 +46,9 @@ public class SystemConfigController {
         return Result.success(systemConfigService.getConfigPage(systemConfigPageForm));
     }
 
+    @GetMapping("/{configKey}")
+    @SaCheckPermission("system:config:query")
+    private Result<SystemConfigEntity> getConfigValueByConfigKey(@PathVariable String configKey) {
+        return Result.success(systemConfigService.getConfigValueByConfigKey(configKey));
+    }
 }
