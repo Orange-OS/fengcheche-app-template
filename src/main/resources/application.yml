@@ -1,40 +1,12 @@
+# 主配置文件（公共配置）
 server:
-  port: 8090
+  port: 8080
   servlet:
     context-path: /fengcheche
 
 spring:
-  datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/fengcheche?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-    #    url: jdbc:mysql://192.168.1.7:3306/fengcheche?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-    username: root
-    password: 123456
-    druid:
-      initial-size: 5
-      min-idle: 5
-      max-active: 20
-      max-wait: 60000
-      time-between-eviction-runs-millis: 60000
-      min-evictable-idle-time-millis: 300000
-      validation-query: SELECT 1
-      test-while-idle: true
-      test-on-borrow: false
-      test-on-return: false
-      pool-prepared-statements: true
-      max-pool-prepared-statement-per-connection-size: 20
-      filters: stat,wall
-      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    lettuce:
-      pool:
-        max-active: 8
-        max-wait: 200s
-        max-idle: 8
-        min-idle: 0
+  profiles:
+    active: dev  # 默认使用 dev 环境
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
@@ -55,9 +27,6 @@ mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.zsy.module.*.*.domain
   type-handlers-package: com.zsy.config
-
-file:
-  dir: E:\文件上传\fengcheche-template
 
 # Sa-Token 配置
 sa-token:
