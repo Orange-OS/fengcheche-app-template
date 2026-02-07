@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsy.module.system.chat.mapper.SystemChatMessageMapper">
+
+    <!-- 查询当前用户的聊天列表 -->
+    <select id="selectChatList" resultType="com.zsy.module.system.chat.domain.vo.SystemChatListVO">
+        SELECT 
+            CASE 
+                WHEN m.from_user_id = #{userId} THEN m.to_user_id
+                ELSE m.from_user_id
+            END AS peerUserId,
+            MAX(m.send_time) AS lastMessageTime,
+            SUBSTRING_INDEX(GROUP_CONCAT(m.content ORDER BY m.send_time DESC SEPARATOR '|||'), '|||', 1) AS lastMessage,
+            COUNT(CASE WHEN m.to_user_id = #{userId} AND m.read_flag = 0 THEN 1 END) AS unreadCount
+        FROM system_chat_message m
+        WHERE m.from_user_id = #{userId} OR m.to_user_id = #{userId}
+        GROUP BY CASE 
+                    WHEN m.from_user_id = #{userId} THEN m.to_user_id
+                    ELSE m.from_user_id
+                 END
+        ORDER BY lastMessageTime DESC
+    </select>
+
+</mapper>
+
+
