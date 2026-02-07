@@ -1,7 +1,6 @@
 package com.zsy.module.system.permission.service;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.zsy.constant.CacheKeyConst;
 import com.zsy.module.system.menu.domain.entity.SystemMenuEntity;
 import com.zsy.module.system.menu.domain.vo.MenuVO;
@@ -15,7 +14,9 @@ import com.zsy.module.system.userrole.mapper.SystemUserRoleMapper;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.Collections;
@@ -43,7 +44,7 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
     private SystemMenuMapper systemMenuMapper;
 
 
-//    @Override
+    //    @Override
 //    public List<SystemPermissionEntity> getPermissionsByRoleId(Long roleId) {
 //        return baseMapper.selectByRoleId(roleId);
 //    }
@@ -62,7 +63,7 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
                 systemMenuEntityList.stream()
                         .map(SystemMenuEntity::getPermission)
                         .filter(Objects::nonNull)
-                        .filter(StringUtils::isNotBlank)
+                        .filter(StringUtils::hasLength)
                         .collect(Collectors.toList());
     }
 
@@ -164,6 +165,7 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
      * @param menuIdList 菜单ID列表
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updatePermissionTree(Long roleId, List<Long> menuIdList) {
 
         // 1. 验证角色是否存在
@@ -197,7 +199,6 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
 
             systemRoleMenuEntityList.forEach(item -> systemRoleMenuMapper.insert(item));
         }
-
     }
 
     /**
