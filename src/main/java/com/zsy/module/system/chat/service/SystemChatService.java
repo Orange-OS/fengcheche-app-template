@@ -3,8 +3,8 @@ package com.zsy.module.system.chat.service;
 import com.zsy.common.domain.BasePageVO;
 import com.zsy.common.domain.Result;
 import com.zsy.module.system.chat.domain.form.SystemChatSendMessageForm;
-import com.zsy.module.system.chat.domain.vo.SystemChatListVO;
 import com.zsy.module.system.chat.domain.vo.SystemChatMessageVO;
+import com.zsy.module.system.chat.domain.vo.SystemChatVO;
 
 import java.util.List;
 
@@ -34,7 +34,12 @@ public interface SystemChatService {
     /**
      * 获取当前用户的聊天列表
      */
-    Result<List<SystemChatListVO>> getChatList();
+    Result<List<SystemChatVO>> getChatList();
+
+    /**
+     * 查询当前用户的未读消息列表
+     */
+    Result<List<SystemChatMessageVO>> getUnreadMessages();
 }
 
 

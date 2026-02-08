@@ -5,8 +5,8 @@ import cn.dev33.satoken.stp.StpUtil;
 import com.zsy.common.domain.BasePageVO;
 import com.zsy.common.domain.Result;
 import com.zsy.module.system.chat.domain.form.SystemChatSendMessageForm;
-import com.zsy.module.system.chat.domain.vo.SystemChatListVO;
 import com.zsy.module.system.chat.domain.vo.SystemChatMessageVO;
+import com.zsy.module.system.chat.domain.vo.SystemChatVO;
 import com.zsy.module.system.chat.service.SystemChatService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -57,7 +57,7 @@ public class SystemChatController {
      * 获取当前用户的聊天列表
      */
     @GetMapping("/list")
-    public Result<List<SystemChatListVO>> list() {
+    public Result<List<SystemChatVO>> list() {
         return chatService.getChatList();
     }
 }

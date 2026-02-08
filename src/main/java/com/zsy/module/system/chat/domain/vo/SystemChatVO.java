@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  * 聊天列表项
  */
 @Data
-public class SystemChatListVO implements Serializable {
+public class SystemChatVO implements Serializable {
 
     /**
      * 对方用户ID

@@ -15,12 +15,17 @@ public class SystemChatMessageVO implements Serializable {
 
     private Long fromUserId;
 
+    private String fromNickname;
+
+    private String fromAvatar;
+
     private Long toUserId;
 
     /**
      * 接收方用户昵称
      */
     private String toNickname;
+    private String toAvatar;
 
     private String content;
 

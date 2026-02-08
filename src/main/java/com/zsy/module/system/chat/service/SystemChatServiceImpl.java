@@ -6,15 +6,16 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zsy.common.domain.BasePageVO;
 import com.zsy.common.domain.Result;
+import com.zsy.module.system.chat.core.ChatWebSocketHandler;
 import com.zsy.module.system.chat.domain.entity.SystemChatMessageEntity;
 import com.zsy.module.system.chat.domain.form.SystemChatSendMessageForm;
-import com.zsy.module.system.chat.domain.vo.SystemChatListVO;
 import com.zsy.module.system.chat.domain.vo.SystemChatMessageVO;
+import com.zsy.module.system.chat.domain.vo.SystemChatVO;
 import com.zsy.module.system.chat.mapper.SystemChatMessageMapper;
-import com.zsy.module.system.chat.service.SystemChatService;
 import com.zsy.module.system.user.domain.entity.SystemUserEntity;
 import com.zsy.module.system.user.service.SystemUserService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -35,6 +36,10 @@ public class SystemChatServiceImpl implements SystemChatService {
     @Resource
     private SystemUserService systemUserService;
 
+    @Lazy
+    @Resource
+    private ChatWebSocketHandler chatWebSocketHandler;
+
     @Override
     public Result<SystemChatMessageVO> sendMessage(Long fromUserId, SystemChatSendMessageForm form) {
         SystemChatMessageEntity entity = new SystemChatMessageEntity();
@@ -44,40 +49,25 @@ public class SystemChatServiceImpl implements SystemChatService {
         entity.setReadFlag(0);
         entity.setSendTime(LocalDateTime.now());
 
+        // 插入
         chatMessageMapper.insert(entity);
-        SystemChatMessageVO vo = new SystemChatMessageVO();
-        BeanUtils.copyProperties(entity, vo);
-        
-        // 填充接收方用户昵称
-        SystemUserEntity toUser = systemUserService.selectById(form.getToUserId());
-        if (toUser != null) {
-            vo.setToNickname(toUser.getNickname());
-        }
-        
+
+        SystemChatMessageVO vo = buildSystemChatMessageVO(entity);
+        // 方案1：统一推送消息（无论通过 REST API 还是 WebSocket 发送）
+        chatWebSocketHandler.pushMessage(vo);
+
         return Result.success(vo);
     }
 
     @Override
     public Result<BasePageVO<SystemChatMessageVO>> getChatHistory(Long peerUserId, Integer current, Integer size) {
-        Object loginId = StpUtil.getLoginId();
-        Long userId = Long.parseLong(loginId.toString());
+        Long userId = StpUtil.getLoginIdAsLong();
 
         Page<SystemChatMessageEntity> page = new Page<>(current, size);
         Page<SystemChatMessageEntity> resultPage =
                 (Page<SystemChatMessageEntity>) chatMessageMapper.selectChatPage(page, userId, peerUserId);
 
-        List<SystemChatMessageVO> voList = resultPage.getRecords().stream().map(entity -> {
-            SystemChatMessageVO vo = new SystemChatMessageVO();
-            BeanUtils.copyProperties(entity, vo);
-            
-            // 填充接收方用户昵称
-            SystemUserEntity toUser = systemUserService.selectById(entity.getToUserId());
-            if (toUser != null) {
-                vo.setToNickname(toUser.getNickname());
-            }
-            
-            return vo;
-        }).collect(Collectors.toList());
+        List<SystemChatMessageVO> voList = resultPage.getRecords().stream().map(this::buildSystemChatMessageVO).collect(Collectors.toList());
 
         BasePageVO<SystemChatMessageVO> pageVO = new BasePageVO<>();
         pageVO.setList(voList);
@@ -108,12 +98,11 @@ public class SystemChatServiceImpl implements SystemChatService {
     }
 
     @Override
-    public Result<List<SystemChatListVO>> getChatList() {
-        Object loginId = StpUtil.getLoginId();
-        Long userId = Long.parseLong(loginId.toString());
+    public Result<List<SystemChatVO>> getChatList() {
+        Long userId = StpUtil.getLoginIdAsLong();
 
         // 查询聊天列表
-        List<SystemChatListVO> chatList = chatMessageMapper.selectChatList(userId);
+        List<SystemChatVO> chatList = chatMessageMapper.selectChatList(userId);
 
         if (chatList == null || chatList.isEmpty()) {
             return Result.success(chatList);
@@ -121,7 +110,7 @@ public class SystemChatServiceImpl implements SystemChatService {
 
         // 批量查询用户信息，避免N+1查询
         List<Long> peerUserIds = chatList.stream()
-                .map(SystemChatListVO::getPeerUserId)
+                .map(SystemChatVO::getPeerUserId)
                 .collect(Collectors.toList());
 
         List<SystemUserEntity> users = systemUserService.listByIds(peerUserIds);
@@ -139,6 +128,41 @@ public class SystemChatServiceImpl implements SystemChatService {
         });
 
         return Result.success(chatList);
+    }
+
+    @Override
+    public Result<List<SystemChatMessageVO>> getUnreadMessages() {
+        Object loginId = StpUtil.getLoginId();
+        Long userId = Long.parseLong(loginId.toString());
+
+        // 查询未读消息
+        List<SystemChatMessageEntity> unreadMessages = chatMessageMapper.selectUnreadMessages(userId);
+
+        // 转换为 VO
+        List<SystemChatMessageVO> voList = unreadMessages.stream().map(this::buildSystemChatMessageVO).collect(Collectors.toList());
+
+        return Result.success(voList);
+    }
+
+    private SystemChatMessageVO buildSystemChatMessageVO(SystemChatMessageEntity entity) {
+        SystemChatMessageVO vo = new SystemChatMessageVO();
+        BeanUtils.copyProperties(entity, vo);
+
+        // 填充接收方用户昵称
+        SystemUserEntity fromUser = systemUserService.selectById(entity.getFromUserId());
+        if (fromUser != null) {
+            vo.setFromNickname(fromUser.getNickname());
+            vo.setFromAvatar(fromUser.getAvatar());
+        }
+
+        // 填充接收方用户昵称
+        SystemUserEntity toUser = systemUserService.selectById(entity.getToUserId());
+        if (toUser != null) {
+            vo.setToNickname(toUser.getNickname());
+            vo.setToAvatar(toUser.getAvatar());
+        }
+
+        return vo;
     }
 }
 

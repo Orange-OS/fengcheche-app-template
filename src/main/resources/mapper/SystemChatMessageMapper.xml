@@ -4,7 +4,7 @@
 <mapper namespace="com.zsy.module.system.chat.mapper.SystemChatMessageMapper">
 
     <!-- 查询当前用户的聊天列表 -->
-    <select id="selectChatList" resultType="com.zsy.module.system.chat.domain.vo.SystemChatListVO">
+    <select id="selectChatList" resultType="com.zsy.module.system.chat.domain.vo.SystemChatVO">
         SELECT 
             CASE 
                 WHEN m.from_user_id = #{userId} THEN m.to_user_id

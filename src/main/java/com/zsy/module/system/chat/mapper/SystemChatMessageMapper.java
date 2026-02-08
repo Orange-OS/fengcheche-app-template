@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zsy.module.system.chat.domain.entity.SystemChatMessageEntity;
-import com.zsy.module.system.chat.domain.vo.SystemChatListVO;
+import com.zsy.module.system.chat.domain.vo.SystemChatVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -31,7 +31,15 @@ public interface SystemChatMessageMapper extends BaseMapper<SystemChatMessageEnt
     /**
      * 查询当前用户的聊天列表
      */
-    List<SystemChatListVO> selectChatList(@Param("userId") Long userId);
+    List<SystemChatVO> selectChatList(@Param("userId") Long userId);
+
+    /**
+     * 查询用户的未读消息列表（按发送时间正序）
+     */
+    @Select("SELECT * FROM system_chat_message " +
+            "WHERE to_user_id = #{userId} AND read_flag = 0 " +
+            "ORDER BY send_time ASC")
+    List<SystemChatMessageEntity> selectUnreadMessages(@Param("userId") Long userId);
 }
 
 
