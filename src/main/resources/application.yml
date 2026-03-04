@@ -67,3 +67,8 @@ springdoc:
     path: /swagger-ui.html
     enabled: true
   packages-to-scan: com.zsy
+
+fengcheche:
+  websocket:
+    enable: true
+    sender-type: local

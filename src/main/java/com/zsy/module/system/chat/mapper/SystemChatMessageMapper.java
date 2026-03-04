@@ -8,6 +8,7 @@ import com.zsy.module.system.chat.domain.vo.SystemChatVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -40,6 +41,9 @@ public interface SystemChatMessageMapper extends BaseMapper<SystemChatMessageEnt
             "WHERE to_user_id = #{userId} AND read_flag = 0 " +
             "ORDER BY send_time ASC")
     List<SystemChatMessageEntity> selectUnreadMessages(@Param("userId") Long userId);
+
+    @Update("UPDATE system_chat_message SET read_flag = #{readFlag} WHERE id = #{id}")
+    void updateReadFlag(@Param("id") Long id, @Param("readFlag") Integer readFlag);
 }
 
 

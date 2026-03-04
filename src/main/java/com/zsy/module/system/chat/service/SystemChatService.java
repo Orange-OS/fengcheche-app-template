@@ -2,6 +2,7 @@ package com.zsy.module.system.chat.service;
 
 import com.zsy.common.domain.BasePageVO;
 import com.zsy.common.domain.Result;
+import com.zsy.module.system.chat.domain.entity.SystemChatMessageEntity;
 import com.zsy.module.system.chat.domain.form.SystemChatSendMessageForm;
 import com.zsy.module.system.chat.domain.vo.SystemChatMessageVO;
 import com.zsy.module.system.chat.domain.vo.SystemChatVO;
@@ -40,6 +41,15 @@ public interface SystemChatService {
      * 查询当前用户的未读消息列表
      */
     Result<List<SystemChatMessageVO>> getUnreadMessages();
+
+    SystemChatMessageEntity createChat(Long fromUserId, Long toUserId, String content);
+
+    /**
+     * 更新是否已读状态
+     * @param id        消息编号
+     * @param readFlag  0-未读 1-已读
+     */
+    void updateReadFlag(Long id, Integer readFlag);
 }
 
 

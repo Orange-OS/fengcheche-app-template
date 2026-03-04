@@ -17,8 +17,7 @@ public class ChatHandshakeInterceptor implements HandshakeInterceptor {
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response,
                                    WebSocketHandler wsHandler, Map<String, Object> attributes) {
         try {
-            Object loginId = StpUtil.getLoginId();
-            Long userId = Long.parseLong(loginId.toString());
+            Long userId= StpUtil.getLoginIdAsLong();
             attributes.put("userId", userId);
             return true;
         } catch (Exception e) {
