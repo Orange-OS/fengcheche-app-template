@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  clickhouse:
+    image: docker.1ms.run/clickhouse/clickhouse-server:25.8-alpine
+    container_name: clickhouse-server
+    hostname: clickhouse
+    ports:
+      - "8123:8123"   # HTTP 接口
+      - "9000:9000"   # 原生 TCP 接口
+      - "9009:9009"   # 内部复制接口
+    volumes:
+      - ./clickhouse-data:/var/lib/clickhouse
+      - ./clickhouse-logs:/var/log/clickhouse-server
+      - ./clickhouse-config:/etc/clickhouse-server
+    environment:
+      - CLICKHOUSE_DB=default
+      - CLICKHOUSE_USER=default
+      - CLICKHOUSE_PASSWORD=123456
+      - CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT=1
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    networks:
+      - clickhouse-net
+    restart: unless-stopped
+
+networks:
+  clickhouse-net:
+    driver: bridge
