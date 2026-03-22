@@ -1,8 +1,8 @@
-package com.zsy.module.system.login.service;
+package com.zsy.module.system.auth.service;
 
 import com.zsy.common.domain.Result;
-import com.zsy.module.system.login.domain.form.SystemUserLoginForm;
-import com.zsy.module.system.login.domain.vo.LoginResultVO;
+import com.zsy.module.system.auth.domain.form.SystemUserLoginForm;
+import com.zsy.module.system.auth.domain.vo.LoginResultVO;
 import com.zsy.module.system.menu.domain.entity.SystemMenuEntity;
 import com.zsy.module.system.user.domain.entity.SystemUserEntity;
 
@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 登录服务接口
  */
-public interface LoginService {
+public interface SystemAuthService {
 
     /**
      * 用户登录

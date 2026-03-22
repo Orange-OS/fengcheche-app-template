@@ -1,10 +1,10 @@
-package com.zsy.module.system.login.controller;
+package com.zsy.module.system.auth.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
 import com.zsy.common.domain.Result;
-import com.zsy.module.system.login.domain.form.SystemUserLoginForm;
-import com.zsy.module.system.login.domain.vo.LoginResultVO;
-import com.zsy.module.system.login.service.LoginService;
+import com.zsy.module.system.auth.domain.form.SystemUserLoginForm;
+import com.zsy.module.system.auth.domain.vo.LoginResultVO;
+import com.zsy.module.system.auth.service.SystemAuthService;
 import com.zsy.module.system.menu.domain.entity.SystemMenuEntity;
 import com.zsy.module.system.user.domain.entity.SystemUserEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,17 +17,17 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/system/auth")
-public class LoginController {
+public class SystemAuthController {
 
     @Resource
-    private LoginService loginService;
+    private SystemAuthService systemAuthService;
 
     /**
      * 用户登录
      */
     @PostMapping("/login")
     public Result<LoginResultVO> login(@RequestBody SystemUserLoginForm systemUserLoginForm) {
-        return loginService.login(systemUserLoginForm);
+        return systemAuthService.login(systemUserLoginForm);
     }
 
     /**
@@ -35,7 +35,7 @@ public class LoginController {
      */
     @GetMapping("/logout")
     public Result<Void> logout() {
-        loginService.logout();
+        systemAuthService.logout();
         return Result.success();
     }
 
@@ -44,7 +44,7 @@ public class LoginController {
      */
     @GetMapping("/info")
     public Result<SystemUserEntity> getUserInfo() {
-        SystemUserEntity user = loginService.getUserInfo();
+        SystemUserEntity user = systemAuthService.getUserInfo();
         return Result.success(user);
     }
 
@@ -71,7 +71,7 @@ public class LoginController {
      */
     @GetMapping("/menu-list")
     public Result<List<SystemMenuEntity>> getUserMenuList() {
-        return Result.success(loginService.getUserMenuList());
+        return Result.success(systemAuthService.getUserMenuList());
     }
 
     /**
@@ -79,6 +79,6 @@ public class LoginController {
      */
     @GetMapping("/permission-list")
     public Result<List<SystemMenuEntity>> getUserPermissionList() {
-        return Result.success(loginService.getUserPermissionList());
+        return Result.success(systemAuthService.getUserPermissionList());
     }
 }

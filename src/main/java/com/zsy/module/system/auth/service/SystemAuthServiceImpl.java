@@ -1,4 +1,4 @@
-package com.zsy.module.system.login.service;
+package com.zsy.module.system.auth.service;
 
 import cn.dev33.satoken.secure.SaSecureUtil;
 import cn.dev33.satoken.stp.StpUtil;
@@ -6,8 +6,8 @@ import cn.hutool.extra.servlet.ServletUtil;
 import com.zsy.framework.common.exception.BusinessException;
 import com.zsy.common.domain.Result;
 import com.zsy.module.system.captcha.service.CaptchaService;
-import com.zsy.module.system.login.domain.form.SystemUserLoginForm;
-import com.zsy.module.system.login.domain.vo.LoginResultVO;
+import com.zsy.module.system.auth.domain.form.SystemUserLoginForm;
+import com.zsy.module.system.auth.domain.vo.LoginResultVO;
 import com.zsy.module.system.menu.domain.entity.SystemMenuEntity;
 import com.zsy.module.system.menu.service.SystemMenuService;
 import com.zsy.module.system.permission.service.SystemPermissionService;
@@ -26,7 +26,7 @@ import java.util.List;
  * 登录服务实现类
  */
 @Service
-public class LoginServiceImpl implements LoginService {
+public class SystemAuthServiceImpl implements SystemAuthService {
 
     @Resource
     private SystemUserService systemUserService;

@@ -1,4 +1,4 @@
-package com.zsy.module.system.login.domain.form;
+package com.zsy.module.system.auth.domain.form;
 
 import com.zsy.module.system.captcha.domain.form.CaptchaForm;
 import lombok.Data;
