@@ -1,13 +1,15 @@
 package com.zsy.module.system.auth.service;
 
 import cn.dev33.satoken.secure.SaSecureUtil;
+import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.extra.servlet.ServletUtil;
-import com.zsy.framework.common.exception.BusinessException;
+import com.zsy.common.constant.SaSessionConst;
 import com.zsy.common.domain.Result;
-import com.zsy.module.system.captcha.service.CaptchaService;
+import com.zsy.framework.common.exception.BusinessException;
 import com.zsy.module.system.auth.domain.form.SystemUserLoginForm;
 import com.zsy.module.system.auth.domain.vo.LoginResultVO;
+import com.zsy.module.system.captcha.service.CaptchaService;
 import com.zsy.module.system.menu.domain.entity.SystemMenuEntity;
 import com.zsy.module.system.menu.service.SystemMenuService;
 import com.zsy.module.system.permission.service.SystemPermissionService;
@@ -81,13 +83,19 @@ public class SystemAuthServiceImpl implements SystemAuthService {
         // 登录
         StpUtil.login(user.getId());
 
+        // 获取当前会话的 Account-Session
+        SaSession session = StpUtil.getSession();
+        session.set(SaSessionConst.USER_ID, user.getId());
+        session.set(SaSessionConst.REGION_CODE, user.getRegionNo());
+        session.set(SaSessionConst.DEPT_ID, user.getDeptId());
+
         // 返回 token 和用户信息
         LoginResultVO loginResultVO = new LoginResultVO();
         loginResultVO.setToken(StpUtil.getTokenValue());
 
         // 清除敏感信息
         user.setPassword("***");
-        loginResultVO.setUserInfo(user);
+        loginResultVO.setSystemUserEntity(user);
 
         return Result.success(loginResultVO);
     }

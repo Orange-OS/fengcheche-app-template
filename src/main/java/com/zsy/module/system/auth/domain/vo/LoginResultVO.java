@@ -10,16 +10,16 @@ import java.io.Serializable;
  */
 @Data
 public class LoginResultVO implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     /**
      * 用户令牌
      */
     private String token;
-    
+
     /**
      * 用户信息
      */
-    private SystemUserEntity userInfo;
+    private SystemUserEntity systemUserEntity;
 }
