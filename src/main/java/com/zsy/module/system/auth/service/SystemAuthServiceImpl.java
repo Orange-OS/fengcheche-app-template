@@ -86,7 +86,7 @@ public class SystemAuthServiceImpl implements SystemAuthService {
         // 获取当前会话的 Account-Session
         SaSession session = StpUtil.getSession();
         session.set(SaSessionConst.USER_ID, user.getId());
-        session.set(SaSessionConst.REGION_CODE, user.getRegionNo());
+        session.set(SaSessionConst.REGION_CODE, user.getRegionCode());
         session.set(SaSessionConst.DEPT_ID, user.getDeptId());
 
         // 返回 token 和用户信息

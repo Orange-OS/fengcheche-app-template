@@ -44,9 +44,9 @@ public class SystemUserEntity implements Serializable {
     private String nickname;
 
     /**
-     * 备注
+     * 用户性别
      */
-    private String remark;
+    private Integer sex;
 
     /**
      * 用户邮箱
@@ -59,12 +59,22 @@ public class SystemUserEntity implements Serializable {
     private String mobile;
 
     /**
-     * 用户性别
+     * 所属地域
      */
-    private Integer sex;
+    private String regionCode;
 
     /**
-     * 帐号状态（1-正常 0-停用）
+     * 所属部门
+     */
+    private Long deptId;
+
+    /**
+     * 备注
+     */
+    private String remark;
+
+    /**
+     * 帐号状态(1-正常 0-停用)
      */
     private Integer status;
 

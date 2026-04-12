@@ -10,7 +10,7 @@ public class SaSessionConst {
     public static final String USER_ID = "userId";
 
     /**
-     * 地域编码
+     * 地域代码
      */
     public static final String REGION_CODE = "regionCode";
 
