@@ -1,5 +1,6 @@
 package com.zsy.module.system.user.domain.form;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
@@ -46,6 +47,12 @@ public class SystemUserCreateForm {
     private String mobile;
 
     /**
+     * 所属地域
+     */
+    @Schema(name = "所属地域")
+    private String regionCode;
+
+    /**
      * 用户性别
      */
     private Integer sex;
@@ -54,10 +61,4 @@ public class SystemUserCreateForm {
      * 帐号状态（1-正常 0-停用）
      */
     private Integer status;
-
-    /**
-     * 角色ID列表
-     */
-    @NotEmpty(message = "角色ID列表不能为空")
-    private List<Long> roleIds;
 }

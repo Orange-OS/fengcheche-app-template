@@ -45,9 +45,6 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         systemUserEntity.setPassword(SaSecureUtil.md5(systemUserEntity.getPassword()));
         systemUserMapper.insert(systemUserEntity);
 
-        // 创建用户角色关系
-        createUserRoleRelations(systemUserEntity.getId(), createForm.getRoleIds());
-
         return Result.success();
     }
 
@@ -69,17 +66,14 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public void updateUser(SystemUserUpdateForm updateForm) {
-        // 保存用户
         SystemUserEntity systemUserEntity = new SystemUserEntity();
         BeanUtils.copyProperties(updateForm, systemUserEntity);
-        // 不允许修改密码
-        systemUserEntity.setPassword(null);
-        this.updateById(systemUserEntity);
+        // 密码加密
+        systemUserEntity.setPassword(SaSecureUtil.md5(updateForm.getPassword()));
 
-        // 更新用户角色关系
-        updateUserRoleRelations(updateForm.getId(), updateForm.getRoleIds());
+        // 更新
+        this.updateById(systemUserEntity);
     }
 
     /**
@@ -150,7 +144,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     public SystemUserEntity getUserById(Long id) {
         SystemUserEntity user = this.getById(id);
         if (user != null) {
-            user.setPassword(null);
+            user.setPassword("*");
         }
         return user;
     }

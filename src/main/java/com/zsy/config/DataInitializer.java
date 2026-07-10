@@ -6,8 +6,8 @@
 //import com.zsy.module.system.menu.service.SystemMenuService;
 //import com.zsy.module.system.permission.domain.SystemPermissionEntity;
 //import com.zsy.module.system.permission.service.SystemPermissionService;
-//import com.zsy.module.system.role.domain.SystemRoleEntity;
-//import com.zsy.module.system.role.service.SystemRoleService;
+//import com.zsy.module.system.role.domain.SystemRegionEntity;
+//import com.zsy.module.system.role.service.SystemRegionService;
 //import com.zsy.module.system.rolemenu.domain.SystemRoleMenuEntity;
 //import com.zsy.module.system.rolemenu.service.SystemRoleMenuService;
 //import com.zsy.module.system.rolepermission.domain.SystemRolePermissionEntity;
@@ -38,7 +38,7 @@
 //    private SystemUserService systemUserService;
 //
 //    @Resource
-//    private SystemRoleService systemRoleService;
+//    private SystemRegionService systemRoleService;
 //
 //    @Resource
 //    private SystemMenuService systemMenuService;
@@ -86,10 +86,10 @@
 //            return;
 //        }
 //
-//        List<SystemRoleEntity> roles = new ArrayList<>();
+//        List<SystemRegionEntity> roles = new ArrayList<>();
 //
 //        // 管理员角色
-//        SystemRoleEntity adminRole = new SystemRoleEntity();
+//        SystemRegionEntity adminRole = new SystemRegionEntity();
 //        adminRole.setName("管理员");
 //        adminRole.setCode("admin");
 //        adminRole.setDescription("系统管理员，拥有所有权限");
@@ -98,7 +98,7 @@
 //        roles.add(adminRole);
 //
 //        // 普通用户角色
-//        SystemRoleEntity userRole = new SystemRoleEntity();
+//        SystemRegionEntity userRole = new SystemRegionEntity();
 //        userRole.setName("普通用户");
 //        userRole.setCode("user");
 //        userRole.setDescription("普通用户，拥有基本权限");
@@ -107,7 +107,7 @@
 //        roles.add(userRole);
 //
 //        // 游客角色
-//        SystemRoleEntity guestRole = new SystemRoleEntity();
+//        SystemRegionEntity guestRole = new SystemRegionEntity();
 //        guestRole.setName("游客");
 //        guestRole.setCode("guest");
 //        guestRole.setDescription("游客，只有查看权限");
@@ -393,7 +393,7 @@
 //        List<SystemRoleMenuEntity> roleMenus = new ArrayList<>();
 //
 //        // 获取角色
-//        List<SystemRoleEntity> roles = systemRoleService.list();
+//        List<SystemRegionEntity> roles = systemRoleService.list();
 //        if (roles.isEmpty()) {
 //            log.warn("未找到角色，无法初始化角色-菜单关联");
 //            return;
@@ -410,7 +410,7 @@
 //        Long adminRoleId = roles.stream()
 //                .filter(role -> "admin".equals(role.getCode()))
 //                .findFirst()
-//                .map(SystemRoleEntity::getId)
+//                .map(SystemRegionEntity::getId)
 //                .orElse(null);
 //
 //        if (adminRoleId != null) {
@@ -426,7 +426,7 @@
 //        Long userRoleId = roles.stream()
 //                .filter(role -> "user".equals(role.getCode()))
 //                .findFirst()
-//                .map(SystemRoleEntity::getId)
+//                .map(SystemRegionEntity::getId)
 //                .orElse(null);
 //
 //        if (userRoleId != null) {
@@ -483,7 +483,7 @@
 //        List<SystemRolePermissionEntity> rolePermissions = new ArrayList<>();
 //
 //        // 获取角色
-//        List<SystemRoleEntity> roles = systemRoleService.list();
+//        List<SystemRegionEntity> roles = systemRoleService.list();
 //        if (roles.isEmpty()) {
 //            log.warn("未找到角色，无法初始化角色-权限关联");
 //            return;
@@ -500,7 +500,7 @@
 //        Long adminRoleId = roles.stream()
 //                .filter(role -> "admin".equals(role.getCode()))
 //                .findFirst()
-//                .map(SystemRoleEntity::getId)
+//                .map(SystemRegionEntity::getId)
 //                .orElse(null);
 //
 //        if (adminRoleId != null) {
@@ -516,7 +516,7 @@
 //        Long userRoleId = roles.stream()
 //                .filter(role -> "user".equals(role.getCode()))
 //                .findFirst()
-//                .map(SystemRoleEntity::getId)
+//                .map(SystemRegionEntity::getId)
 //                .orElse(null);
 //
 //        if (userRoleId != null) {
@@ -557,7 +557,7 @@
 //        }
 //
 //        // 获取角色
-//        List<SystemRoleEntity> roles = systemRoleService.list();
+//        List<SystemRegionEntity> roles = systemRoleService.list();
 //        if (roles.isEmpty()) {
 //            log.warn("未找到角色，无法初始化用户-角色关联");
 //            return;
@@ -573,7 +573,7 @@
 //        Long adminRoleId = roles.stream()
 //                .filter(role -> "admin".equals(role.getCode()))
 //                .findFirst()
-//                .map(SystemRoleEntity::getId)
+//                .map(SystemRegionEntity::getId)
 //                .orElse(null);
 //
 //        if (adminUserId != null && adminRoleId != null) {
@@ -593,7 +593,7 @@
 //        Long userRoleId = roles.stream()
 //                .filter(role -> "user".equals(role.getCode()))
 //                .findFirst()
-//                .map(SystemRoleEntity::getId)
+//                .map(SystemRegionEntity::getId)
 //                .orElse(null);
 //
 //        if (normalUserId != null && userRoleId != null) {
@@ -613,7 +613,7 @@
 //        Long guestRoleId = roles.stream()
 //                .filter(role -> "guest".equals(role.getCode()))
 //                .findFirst()
-//                .map(SystemRoleEntity::getId)
+//                .map(SystemRegionEntity::getId)
 //                .orElse(null);
 //
 //        if (guestUserId != null && guestRoleId != null) {

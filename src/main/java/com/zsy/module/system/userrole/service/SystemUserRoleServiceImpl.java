@@ -8,6 +8,7 @@ import com.zsy.module.system.userrole.domain.vo.SystemUserRoleVO;
 import com.zsy.module.system.userrole.mapper.SystemUserRoleMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
@@ -24,6 +25,22 @@ public class SystemUserRoleServiceImpl extends ServiceImpl<SystemUserRoleMapper,
     @Resource
     private SystemUserMapper systemUserMapper;
 
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void createUpdateUserRole(Long userId, List<Long> roleIdList) {
+        // 删除原有关系
+        systemUserRoleMapper.deleteByUserId(userId);
+
+        if (!roleIdList.isEmpty()) {
+            for (Long roleId : roleIdList) {
+                SystemUserRoleEntity systemUserRoleEntity = new SystemUserRoleEntity();
+                systemUserRoleEntity.setUserId(userId);
+                systemUserRoleEntity.setRoleId(roleId);
+                systemUserRoleMapper.insert(systemUserRoleEntity);
+            }
+        }
+    }
 
     @Override
     public List<SystemUserRoleVO> getUserRoleList(String username) {

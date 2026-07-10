@@ -30,26 +30,24 @@ mybatis-plus:
 
 # Sa-Token 配置
 sa-token:
+  # 指定 token 提交时的前缀
+  token-prefix: Bearer
   # token 名称 (同时也是cookie名称)
-  token-name: satoken
+  token-name: Authorization
   # token 有效期，单位s 默认30天, -1代表永不过期
   timeout: 2592000
   # 是否允许同一账号并发登录 (为true时允许一个账号多地同时登录)
   is-concurrent: true
   # 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)
-  is-share: false
+  is-share: true
   # token风格
   token-style: uuid
   # 是否输出操作日志
   is-log: false
   # 是否从cookie中读取token
-  is-read-cookie: true
+  is-read-cookie: false
   # 是否从请求头中读取token
   is-read-header: true
-  # 是否将token保存到cookie中
-  is-write-cookie: true
-  # 配置 Sa-Token 使用 Redis 存储
-  token-dao-name: redis
 
 logging:
   level:
@@ -58,6 +56,10 @@ logging:
 # 心跳配置
 heart-beat:
   interval-seconds: 60
+
+# 同步配置
+sync:
+  refresh-interval-ms: 60000
 
 # Swagger 配置
 springdoc:

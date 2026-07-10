@@ -8,5 +8,7 @@ import java.util.List;
 
 public interface SystemUserRoleService extends IService<SystemUserRoleEntity> {
 
+    void createUpdateUserRole(Long userId, List<Long> roleIdList);
+
     List<SystemUserRoleVO> getUserRoleList(String username);
 }

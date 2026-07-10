@@ -38,7 +38,7 @@ public class GlobalExceptionHandlerAdvice {
      */
     @ExceptionHandler(NotLoginException.class)
     public Result<Void> handleNotLoginException(NotLoginException e) {
-        log.error("未登录异常：{}", e.getMessage());
+        log.error("未登录异常：{}", e.getMessage(), e);
         return Result.error(401, "未登录或登录已过期");
     }
 
