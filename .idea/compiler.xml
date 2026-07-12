@@ -7,13 +7,28 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="fengcheche-template" />
+        <module name="fengcheche-common" />
+        <module name="fengcheche-sync-executor-service" />
+        <module name="fengcheche-job-admin" />
+        <module name="fengcheche-report-service" />
+        <module name="fengcheche-system-service" />
+        <module name="fengcheche-gateway" />
+        <module name="fengcheche-job-executor-service" />
+        <module name="fengcheche-life-service" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="fengcheche-template" options="-parameters" />
+      <module name="fengcheche-common" options="-parameters" />
+      <module name="fengcheche-gateway" options="-parameters" />
+      <module name="fengcheche-job-admin" options="-parameters" />
+      <module name="fengcheche-job-executor-service" options="-parameters" />
+      <module name="fengcheche-life-service" options="-parameters" />
+      <module name="fengcheche-report-service" options="-parameters" />
+      <module name="fengcheche-sync-executor-service" options="-parameters" />
+      <module name="fengcheche-system-service" options="-parameters" />
+      <module name="fengcheche-template" options="" />
     </option>
   </component>
 </project>

@@ -1,0 +1,57 @@
+server:
+  port: 9000
+
+spring:
+  profiles:
+    active: dev
+  cloud:
+    gateway:
+      # 网关只维护明确路由，避免暴露所有 Nacos 服务。
+      discovery:
+        locator:
+          enabled: false
+      routes:
+        - id: fengcheche-system-service
+          uri: lb://fengcheche-system-service
+          predicates:
+            - Path=/api/system/**
+          filters:
+            - RewritePath=/api/system/(?<segment>.*), /fengcheche/system/$\{segment}
+
+        - id: fengcheche-system-captcha
+          uri: lb://fengcheche-system-service
+          predicates:
+            - Path=/api/system-captcha/**
+          filters:
+            - RewritePath=/api/system-captcha/(?<segment>.*), /fengcheche/system-captcha/$\{segment}
+
+        - id: fengcheche-sync-config
+          uri: lb://fengcheche-system-service
+          predicates:
+            - Path=/api/sync/**
+          filters:
+            - RewritePath=/api/sync/(?<segment>.*), /fengcheche/sync/$\{segment}
+
+        - id: fengcheche-life-service
+          uri: lb://fengcheche-life-service
+          predicates:
+            - Path=/api/life/**
+          filters:
+            - RewritePath=/api/life/(?<segment>.*), /fengcheche-life/life/$\{segment}
+
+        - id: fengcheche-report-service
+          uri: lb://fengcheche-report-service
+          predicates:
+            - Path=/api/report/**
+          filters:
+            - RewritePath=/api/report/(?<segment>.*), /fengcheche-report/$\{segment}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+
+logging:
+  level:
+    org.springframework.cloud.gateway: INFO

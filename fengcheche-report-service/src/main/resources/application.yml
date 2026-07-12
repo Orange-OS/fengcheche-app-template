@@ -1,0 +1,39 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /fengcheche-report
+
+spring:
+  profiles:
+    active: dev
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      write-dates-as-timestamps: false
+
+fengcheche:
+  security:
+    internal:
+      enabled: true
+      token: ${FENGCHECHE_INTERNAL_TOKEN:fengcheche-internal-token}
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+  packages-to-scan: com.zsy.module.chart
+
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 5000
+        read-timeout: 10000
+  compression:
+    request:
+      enabled: true
+    response:
+      enabled: true

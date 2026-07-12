@@ -1,0 +1,47 @@
+server:
+  port: 8091
+  servlet:
+    context-path: /fengcheche-job-executor
+
+spring:
+  profiles:
+    active: dev
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      write-dates-as-timestamps: false
+
+xxl:
+  job:
+    # 本地未启动 XXL-JOB Admin 时可通过 XXL_JOB_ENABLED=false 临时关闭执行器注册。
+    enabled: ${XXL_JOB_ENABLED:true}
+    # 需要和 XXL-JOB Admin 的 accessToken 保持一致；为空表示不启用 token 校验。
+    access-token: ${XXL_JOB_ACCESS_TOKEN:}
+    admin:
+      addresses: ${XXL_JOB_ADMIN_ADDRESSES:http://127.0.0.1:8088/xxl-job-admin}
+    executor:
+      # 需要在 XXL-JOB Admin 的执行器管理中创建同名 AppName。
+      appname: ${XXL_JOB_EXECUTOR_APPNAME:fengcheche-job-executor}
+      address: ${XXL_JOB_EXECUTOR_ADDRESS:}
+      ip: ${XXL_JOB_EXECUTOR_IP:}
+      # XXL-JOB 调度通信端口，必须与其它执行器服务错开。
+      port: ${XXL_JOB_EXECUTOR_PORT:9999}
+      log-path: ${XXL_JOB_EXECUTOR_LOG_PATH:./logs/xxl-job/job-executor}
+      log-retention-days: ${XXL_JOB_EXECUTOR_LOG_RETENTION_DAYS:30}
+
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 5000
+        read-timeout: 10000
+  compression:
+    request:
+      enabled: true
+    response:
+      enabled: true
+
+logging:
+  file:
+    name: ./logs/fengcheche-job-executor.log

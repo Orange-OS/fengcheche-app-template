@@ -1,0 +1,62 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /fengcheche-life
+
+spring:
+  profiles:
+    active: dev
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      write-dates-as-timestamps: false
+
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
+  configuration:
+    map-underscore-to-camel-case: true
+    auto-mapping-behavior: full
+    jdbc-type-for-null: null
+    default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
+  type-aliases-package: com.zsy.module.life.*.domain
+  type-handlers-package: com.zsy.config
+
+sa-token:
+  token-prefix: Bearer
+  token-name: Authorization
+  timeout: 2592000
+  is-concurrent: true
+  is-share: true
+  token-style: uuid
+  is-log: false
+  is-read-cookie: false
+  is-read-header: true
+
+fengcheche:
+  security:
+    internal:
+      enabled: true
+      token: ${FENGCHECHE_INTERNAL_TOKEN:fengcheche-internal-token}
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+  packages-to-scan: com.zsy.module.life
+
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 5000
+        read-timeout: 10000
+  compression:
+    request:
+      enabled: true
+    response:
+      enabled: true

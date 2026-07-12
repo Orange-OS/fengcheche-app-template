@@ -6,12 +6,13 @@ services:
     container_name: fengcheche-mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: fengchecche
+      MYSQL_DATABASE: fengcheche_system
       TZ: Asia/Shanghai
     ports:
       - "13306:3306"
     volumes:
       - ./mysql/mysql-data:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d:ro # 首次创建容器数据目录时自动初始化分库脚本
     networks:
       - fengcheche-network
     healthcheck:

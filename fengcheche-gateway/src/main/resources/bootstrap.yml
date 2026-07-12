@@ -1,0 +1,20 @@
+spring:
+  application:
+    # 网关注册名和配置中心 data-id 前缀。
+    name: fengcheche-gateway
+  cloud:
+    nacos:
+      # 支持通过环境变量切换 Nacos 地址，默认连接指定的 Nacos 服务。
+      server-addr: ${NACOS_SERVER_ADDR:192.168.176.7:8848}
+      username: ${NACOS_USERNAME:nacos}
+      password: ${NACOS_PASSWORD:nacos}
+      discovery:
+        # 命名空间和注册分组用于区分环境、租户或部署集群。
+        namespace: ${NACOS_NAMESPACE:}
+        group: ${NACOS_DISCOVERY_GROUP:DEFAULT_GROUP}
+      config:
+        # 配置分组可独立于注册分组，便于按环境管理配置。
+        namespace: ${NACOS_NAMESPACE:}
+        group: ${NACOS_CONFIG_GROUP:DEFAULT_GROUP}
+        file-extension: yaml
+        refresh-enabled: true

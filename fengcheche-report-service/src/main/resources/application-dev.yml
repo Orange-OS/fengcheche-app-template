@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    dynamic:
+      primary: master
+      strict: false
+      datasource:
+        master:
+          type: com.alibaba.druid.pool.DruidDataSource
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          # 报表服务独立库，后续报表配置、生成记录等数据放在这里。
+          url: jdbc:mysql://192.168.176.7:13306/fengcheche_report?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+          username: root
+          password: root
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
+logging:
+  file:
+    name: ./logs/fengcheche-report.log

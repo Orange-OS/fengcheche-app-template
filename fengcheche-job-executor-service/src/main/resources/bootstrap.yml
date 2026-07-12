@@ -1,0 +1,23 @@
+spring:
+  application:
+    # Nacos 服务名，同时作为 Nacos 配置中心默认 data-id 前缀。
+    name: fengcheche-job-executor-service
+  cloud:
+    nacos:
+      # 执行器服务注册到 Nacos；XXL-JOB 执行器仍单独注册到 Job Admin。
+      server-addr: ${NACOS_SERVER_ADDR:192.168.176.7:8848}
+      username: ${NACOS_USERNAME:nacos}
+      password: ${NACOS_PASSWORD:nacos}
+      discovery:
+        namespace: ${NACOS_NAMESPACE:}
+        group: ${NACOS_DISCOVERY_GROUP:DEFAULT_GROUP}
+      config:
+        namespace: ${NACOS_NAMESPACE:}
+        group: ${NACOS_CONFIG_GROUP:DEFAULT_GROUP}
+        file-extension: yaml
+        refresh-enabled: true
+        shared-configs:
+          # 多个服务共用的数据库、Redis、日志等配置可放在该 data-id。
+          - data-id: fengcheche-common.yaml
+            group: ${NACOS_CONFIG_GROUP:DEFAULT_GROUP}
+            refresh: true
